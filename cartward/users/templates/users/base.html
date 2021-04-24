@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+	<head>
+
+		<!-- Basic -->
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">	
+
+		<title>Cartward | Shop Amazon & Ship overseas </title>	
+
+		<meta name="keywords" content="HTML5 Template" />
+		<meta name="description" content="Porto - Responsive HTML5 Template">
+		<meta name="author" content="okler.net">
+		<!-- Favicon -->
+		<link rel="shortcut icon" href="{% static 'users/img/favicon.ico' %}" type="image/x-icon" />
+		<link rel="apple-touch-icon" href="{% static 'users/img/cart-icon.png' %}">
+
+		<!-- Mobile Metas -->
+		<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, shrink-to-fit=no">
+
+		<!-- Web Fonts  -->
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800%7CShadows+Into+Light" rel="stylesheet" type="text/css">
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800%7CShadows+Into+Light%7CPlayfair+Display:400" rel="stylesheet" type="text/css">
+
+
+		<!-- Vendor CSS -->
+		<link rel="stylesheet" href="{% static 'users/vendor/bootstrap/css/bootstrap.min.css' %}">
+		<link rel="stylesheet" href="{% static 'users/vendor/fontawesome-free/css/all.min.css' %}">
+		<link rel="stylesheet" href="{% static 'users/vendor/animate/animate.min.css' %}">
+		<link rel="stylesheet" href="{% static 'users/vendor/simple-line-icons/css/simple-line-icons.min.css' %}">
+		<link rel="stylesheet" href="{% static 'users/vendor/owl.carousel/assets/owl.carousel.min.css' %}">
+		<link rel="stylesheet" href="{% static 'users/vendor/owl.carousel/assets/owl.theme.default.min.css' %}">
+		<link rel="stylesheet" href="{% static 'users/vendor/magnific-popup/magnific-popup.min.css' %}">
+		<link rel="stylesheet" href="{% static 'users/vendor/bootstrap-star-rating/css/star-rating.min.css' %}">
+		<link rel="stylesheet" href="{% static 'users/vendor/bootstrap-star-rating/themes/krajee-fas/theme.min.css' %}">
+
+		<!-- Theme CSS -->
+		<link rel="stylesheet" href="{% static 'users/css/theme.css' %}">
+		<link rel="stylesheet" href="{% static 'users/css/theme-elements.css' %}">
+		<link rel="stylesheet" href="{% static 'users/css/theme-blog.css' %}">
+		<link rel="stylesheet" href="{% static 'users/css/theme-shop.css' %}">
+		
+		<!-- Demo CSS -->
+
+
+		<!-- Skin CSS -->
+		<link rel="stylesheet" href="{% static 'users/css/skins/default.css' %}"> 
+
+		<!-- Theme Custom CSS -->
+		<link rel="stylesheet" href="{% static 'users/css/custom.css' %}">
+
+		<!-- Head Libs -->
+		<script src="{% static 'users/vendor/modernizr/modernizr.min.js' %}"></script>
+		<style type="text/css">
+			::placeholder { /* Firefox, Chrome, Opera */ 
+			    color: blue; 
+			} 
+			  
+			:-ms-input-placeholder { /* Internet Explorer 10-11 */ 
+			    color: red; 
+			} 
+			  
+			::-ms-input-placeholder { /* Microsoft Edge */ 
+			    color: orange; 
+			}
+			.search {
+			    width: 700px;
+			    margin-bottom: auto;
+			    margin-top: 20px;
+			    height: 50px;
+			    background-color: #F0F0F0;
+			    padding: 10px;
+			    border-radius: 5px
+			}
+
+			.search-input {
+			    color: white;
+			    border: 0;
+			    outline: 0;
+			    background: none;
+			    width: 0;
+			    margin-top: 5px;
+			    caret-color: transparent;
+			    line-height: 20px;
+			    transition: width 0.4s linear;
+
+			}
+
+			.search .search-input {
+			    padding: 0 10px;
+			    width: 100%;
+			    caret-color: #3788C6;
+			    font-size: 19px;
+			    font-weight: 300;
+			    color: black;
+			    transition: width 0.4s linear
+			}
+
+			.search-icon {
+			    height: 34px;
+			    width: 34px;
+			    float: right;
+			    display: flex;
+			    justify-content: center;
+			    align-items: center;
+			    color: white;
+			    background-color: #3788C6;
+			    font-size: 10px;
+			    bottom: 30px;
+			    position: relative;
+			    border-radius: 5px
+			}
+
+			.search-icon:hover {
+			    color: #fff !important
+			}
+
+			a:link {
+			    text-decoration: none
+			}
+		</style>
+
+	</head>
+	<body>
+
+		<div class="body">
+			<header id="header" data-plugin-options="{'stickyEnabled': true, 'stickyEnableOnBoxed': true, 'stickyEnableOnMobile': true, 'stickyStartAt': 135, 'stickySetTop': '-135px', 'stickyChangeLogo': true}">
+				<div class="header-body border-color-primary border-bottom-0 box-shadow-none" data-sticky-header-style="{'minResolution': 0}" data-sticky-header-style-active="{'background-color': '#f7f7f7'}" data-sticky-header-style-deactive="{'background-color': '#FFF'}">
+					<div class="header-top header-top-borders">
+						<div class="container h-100">
+							<div class="header-row h-100">
+								<div class="header-column justify-content-start">
+									<div class="header-row">
+										<nav class="header-nav-top">
+											<ul class="nav nav-pills">
+												<li class="nav-item nav-item-borders py-2">
+													<!-- <a href="{%url 'wishlist-page' %}"><span class="pl-0" ><img height="20px" width="20px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAABmJLR0QA/wD/AP+gvaeTAAADa0lEQVRoge3aW4hVZRQH8N+E5hCNNByLkiyiCEODHkoou0wOPfRQQS9dsKiXIjQfoiffutJDEHR5KKKMSHsJQguiJAdCiCDQTFK0C2kOlGJhUZjO9PCdoX3WnL3d5+xzzswc5g/7YX1rfetb//2t77o385jHPOYxlzBQwmYUa3Fxl2PJw2G8i8+rOHkWk7PkeaZdEqOzIPj4rMkL9qwCIg+0xrsnyI1pQUGlZUHegrGOhFMeI7gvI1+aZ1hEJPbWTrxRIah2sFAjkdwMKkqtOYW+IVKUWmfCCqzOyOPYlpEH8WCLPndibzvBVCEyglcz8phGIkN4vUWf67VJpG9Sq2+IVEmtQ9iekXcH/cmgL+uzLVQhsrX+5OEP3FbBf0vom9TqGyJVUmsRzsnIp3AiIw/gvJK+/pLGVBF+L2HTFDs0bqHXBf26oN8R9OfL346flsbXWlwlPzMux0olXniVHmkXH+BJ/FTC9vuyTntJ5B88jPe74bxXRP7GXfisR+014ExjZBGGM89Q0A9kdOfmtLEK7+A7/IJv8CauretX4DXsquv3YzNu7iSRKliMDxWfz/dgokC/HUvKNNYtIjXpzXfiMuKA+jXVTCyIL+PqDvm6ApswUGWw34nHM/JuaVotwi24P5QdwYvYJ60ZGzReBv4mkf9aWleewGUZ/SjuLmq06oLYDJtCnXEsDTZD9cBP1e1rQV/DweBna69Ta1WQX5J6JIsTUq8sxUM4FvTH8Hwou67XROLea1+B7a8Fuv1BHq4yRsbwaEYeL1HnKC7KyFe22Xasd7TIuBvT7yvB5x7tzZxfBD+be51aHwV5JR5r0ce9uDGUbWtmOIVuLYhfBb8ncVPJusulI3S2/kEsKBojE0FejX9bCHgKWzQeuDbiU/9/ZFoo7Yivx88Ffi6Q3vziUL5Rmqpz8bbObCOeauI7jpVJ/KhxocviQnzbpM57RQSmsKZDRP7EJcH3oOkDdlLqkeXBdpm0O462u0zfcefi6Q6R+cT075U1adaKtsdxe93mBmlajzY/CN80y3wMvVU6W8e32iqeM/1D0RLpsHVNKD8tnTvuwdlBd0DaX7V9mdctDONL5Xp2r8YFddZhEG8pJvGx8tdLM45HpHUlS2ACL5iDl4kj0k8Ck9JZ5I6ZDacaalIvxLNK/+M/xwiFKOEeXskAAAAASUVORK5CYII="> Import Wishlist</span></a> -->
+													
+												</li>
+												<!-- <li class="nav-item nav-item-borders py-2 d-none d-lg-inline-flex">
+													<a href="tel:123-456-7890"><i class="fab fa-whatsapp text-4 text-color-primary" style="top: 0;"></i> 123-456-7890</a>
+												</li>
+												<li class="nav-item nav-item-borders py-2 d-none d-sm-inline-flex">
+													<a href="mailto:mail@domain.com"><i class="far fa-envelope text-4 text-color-primary" style="top: 1px;"></i> mail@domain.com</a>
+												</li> -->
+											</ul>
+										</nav>
+									</div>
+								</div>
+								<div class="header-column justify-content-end">
+									<div class="header-row">
+										<nav class="header-nav-top">
+											<ul class="nav nav-pills">
+												<li class="nav-item nav-item-anim-icon d-none d-md-block">
+													<a class="nav-link pl-0" href="{% url 'aboutus-page' %}"><i class="fas fa-angle-right"></i> About Us</a>
+												</li>
+												<li class="nav-item nav-item-anim-icon d-none d-md-block">
+													<a class="nav-link" href="{% url 'contact-page' %}"><i class="fas fa-angle-right"></i> Contact Us</a>
+												</li>
+												<!-- <li class="nav-item nav-item-anim-icon d-none d-md-block">
+													<a class="nav-link" href="contact-us.html"><i class="fas fa-angle-right"></i> Track Order</a>
+												</li> -->
+												<!-- <li class="nav-item dropdown nav-item-left-border d-none d-sm-block">
+													<a class="nav-link" href="#" role="button" id="dropdownLanguage" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+														<img src="{% static 'users/img/blank.gif' %}" class="flag flag-us" alt="English" /> English
+														<i class="fas fa-angle-down"></i>
+													</a>
+													<div class="dropdown-menu" aria-labelledby="dropdownLanguage">
+														<a class="dropdown-item" href="#"><img src="{% static 'users/img/blank.gif' %}" class="flag flag-us" alt="English" /> English</a>
+														<a class="dropdown-item" href="#"><img src="{% static 'users/img/blank.gif' %}" class="flag flag-es" alt="English" /> Español</a>
+														<a class="dropdown-item" href="#"><img src="{% static 'users/img/blank.gif' %}" class="flag flag-fr" alt="English" /> Française</a>
+													</div>
+												</li> -->
+												<li>
+													<div class="header-nav-features header-nav-features-no-border header-nav-features-lg-show-border order-1 order-lg-2">
+														<div class="nav-link">
+															<a href="#" class="header-nav-features-toggle" data-focus="headerSearch"><span class="pl-0" ><img height="20px" width="20px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAABmJLR0QA/wD/AP+gvaeTAAADa0lEQVRoge3aW4hVZRQH8N+E5hCNNByLkiyiCEODHkoou0wOPfRQQS9dsKiXIjQfoiffutJDEHR5KKKMSHsJQguiJAdCiCDQTFK0C2kOlGJhUZjO9PCdoX3WnL3d5+xzzswc5g/7YX1rfetb//2t77o385jHPOYxlzBQwmYUa3Fxl2PJw2G8i8+rOHkWk7PkeaZdEqOzIPj4rMkL9qwCIg+0xrsnyI1pQUGlZUHegrGOhFMeI7gvI1+aZ1hEJPbWTrxRIah2sFAjkdwMKkqtOYW+IVKUWmfCCqzOyOPYlpEH8WCLPndibzvBVCEyglcz8phGIkN4vUWf67VJpG9Sq2+IVEmtQ9iekXcH/cmgL+uzLVQhsrX+5OEP3FbBf0vom9TqGyJVUmsRzsnIp3AiIw/gvJK+/pLGVBF+L2HTFDs0bqHXBf26oN8R9OfL346flsbXWlwlPzMux0olXniVHmkXH+BJ/FTC9vuyTntJ5B88jPe74bxXRP7GXfisR+014ExjZBGGM89Q0A9kdOfmtLEK7+A7/IJv8CauretX4DXsquv3YzNu7iSRKliMDxWfz/dgokC/HUvKNNYtIjXpzXfiMuKA+jXVTCyIL+PqDvm6ApswUGWw34nHM/JuaVotwi24P5QdwYvYJ60ZGzReBv4mkf9aWleewGUZ/SjuLmq06oLYDJtCnXEsDTZD9cBP1e1rQV/DweBna69Ta1WQX5J6JIsTUq8sxUM4FvTH8Hwou67XROLea1+B7a8Fuv1BHq4yRsbwaEYeL1HnKC7KyFe22Xasd7TIuBvT7yvB5x7tzZxfBD+be51aHwV5JR5r0ce9uDGUbWtmOIVuLYhfBb8ncVPJusulI3S2/kEsKBojE0FejX9bCHgKWzQeuDbiU/9/ZFoo7Yivx88Ffi6Q3vziUL5Rmqpz8bbObCOeauI7jpVJ/KhxocviQnzbpM57RQSmsKZDRP7EJcH3oOkDdlLqkeXBdpm0O462u0zfcefi6Q6R+cT075U1adaKtsdxe93mBmlajzY/CN80y3wMvVU6W8e32iqeM/1D0RLpsHVNKD8tnTvuwdlBd0DaX7V9mdctDONL5Xp2r8YFddZhEG8pJvGx8tdLM45HpHUlS2ACL5iDl4kj0k8Ck9JZ5I6ZDacaalIvxLNK/+M/xwiFKOEeXskAAAAASUVORK5CYII="> Import Wishlist</span></a>
+															<div class="header-nav-features-dropdown" id="headerTopSearchDropdown">
+																<form method="POST" action="{% url 'add_to_cart-method' %}">
+																	{% csrf_token %}
+																	<div class="simple-search input-group">
+																		<input class="form-control text-1" id="headerSearch" name="wishlist" type="search" value="" placeholder="Paste your Amazon wishlist link here">
+																		<span class="input-group-append">
+																			<button class="btn" type="submit">
+																				<i class="fas fa-angle-right"></i>
+																			</button>
+																		</span>
+																	</div>
+																</form>
+															</div>
+														</div>
+													</div>
+												</li>
+											</ul>
+										</nav>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="header-container container" style="overflow: visible;" >
+						<div class="header-row py-2" >
+							<div class="header-column">
+								<div class="header-row" style="width: 100px; height: 48px;">
+									<div class="header-logo" >
+										<a href="{% url 'home-page' %}">
+											<img alt="Porto" width="230" height="140" data-sticky-width="180" data-sticky-height="100" data-sticky-top="100" src="{% static 'users/img/cart-logo.png' %}">
+										</a>
+									</div>
+								</div>
+							</div>
+							<!-- <input type="text" name="" style="width: 550px" placeholder="Search products on Amazon.com or past URL">
+							<button><i class="fas fa-search"></i></button> -->
+							<div id="searchform">
+								<form method="POST" action="{% url 'search-page' %}" id="postform">
+									{% csrf_token %}
+									<div class="search" style="width: 600px; margin-left: 100px;"><input id="searchinput" type="text" class="search-input" value="{{search_query}}"  name="search" placeholder="Search products on Amazon.com or past URL"><a href="#" onclick="submitform()" class="search-icon" type="submit"><i class="fa fa-search"></i></a></div>
+								</form>
+							</div>
+							
+							<div class="header-column justify-content-end">
+								<div class="header-row">
+									<div class="header-nav-features">
+										<div class="header-nav-feature header-nav-features-cart header-nav-features-cart-big d-inline-flex ml-2" data-sticky-header-style="{'minResolution': 991}" data-sticky-header-style-active="{'top': '87px'}" data-sticky-header-style-deactive="{'top': '0'}">
+											<a href="{% url 'cart-page' %}">
+												<img src="{% static 'users/img/icons/icon-cart-big.svg' %}" height="34" alt="" class="header-nav-top-icon-img">
+												
+													<span class="cart-info"  id="numbercart">
+														
+													</span>
+												
+													
+											</a>
+											<!-- <div class="header-nav-features-dropdown" id="headerTopCartDropdown">
+												<ol class="mini-products-list">
+													<li class="item">
+														<a href="#" title="Camera X1000" class="product-image"><img src="{% static 'users/img/products/product-1.jpg' %}" alt="Camera X1000"></a>
+														<div class="product-details">
+															<p class="product-name">
+																<a href="#">Camera X1000 </a>
+															</p>
+															<p class="qty-price">
+																 1X <span class="price">$890</span>
+															</p>
+															<a href="#" title="Remove This Item" class="btn-remove"><i class="fas fa-times"></i></a>
+														</div>
+													</li>
+												</ol>
+												<div class="totals">
+													<span class="label">Total:</span>
+													<span class="price-total"><span class="price">$890</span></span>
+												</div>
+												<div class="actions">
+													<a class="btn btn-dark" href="#">View Cart</a>
+													<a class="btn btn-primary" href="#">Checkout</a>
+												</div>
+											</div> -->
+										</div>
+									</div>
+
+									{% if user.is_authenticated %}
+										<div class="header-nav-features header-nav-features-no-border header-nav-features-lg-show-border order-1 order-lg-2" style="top: 5px;"  >
+											<div class="header-nav-feature header-nav-features-user header-nav-features-user-logged d-inline-flex mx-2 pr-2" id="headerAccount" >
+												<div class="header-nav-feature header-nav-features-cart header-nav-features-cart-big d-inline-flex ml-2" data-sticky-header-style="{'minResolution': 991}" data-sticky-header-style-active="{'top': '85px'}" data-sticky-header-style-deactive="{'top': '0'}">
+											<a href="#" class="header-nav-features-toggle">
+												<a href="#" class="header-nav-features-toggle">
+													<i class="far fa-user"></i> {{user.username}}
+												</a>
+												<div class="header-nav-features-dropdown header-nav-features-dropdown-mobile-fixed header-nav-features-dropdown-force-right" id="headerTopUserDropdown">
+													<div class="row">
+														<div class="col-8">
+									
+															<p><strong class="text-color-dark text-4">Balance: ${{user.profile.balance|floatformat:2}}</strong></p>
+														</div>
+														<div class="col-4">
+															<div class="d-flex justify-content-end">
+																<img class="rounded-circle" width="40" height="40" alt="" src="{% static 'users/img/avatars/avatar.png' %}">
+															</div>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col">
+															<ul class="nav nav-list-simple flex-column text-3">
+																<li class="nav-item"><a class="nav-link border-bottom-0" href="{% url 'profile-page' %}">Profile</a></li>
+																<li class="nav-item"><a class="nav-link border-bottom-0" href="{% url 'deposit-page' %}">Deposit</a></li>
+																<li class="nav-item"><a class="nav-link border-bottom-0" href="{% url 'orders-page' %}">Orders</a></li>
+																<li class="nav-item"><a class="nav-link border-bottom-0" href="{% url 'logout' %}">Log Out</a></li>
+																
+															</ul>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+
+									{% else %}
+
+										<div class="header-nav-features header-nav-features-no-border header-nav-features-lg-show-border order-1 order-lg-2" >
+											<div class="header-nav-feature header-nav-features-user header-nav-features-user-logged d-inline-flex mx-2 pr-2" id="headerAccount" >
+												<div class="header-nav-feature header-nav-features-cart header-nav-features-cart-big d-inline-flex ml-2" data-sticky-header-style="{'minResolution': 991}" data-sticky-header-style-active="{'top': '85px'}" data-sticky-header-style-deactive="{'top': '0'}">
+												<a href="{% url 'signin-register' %}">
+													<strong class="text-color-dark text-2"><i class="far fa-user"></i> SIGN IN/SIGN UP</strong>
+												</a>
+												
+											</div>
+										</div>
+									{% endif %}
+									
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="container">
+						<div class="header-nav-bar bg-color-light-scale-1 mb-3 px-3 px-lg-0">
+							<div class="header-row">
+								<div class="header-column">
+									<div class="header-row justify-content-end">
+										<div class="header-nav header-nav-links justify-content-start" data-sticky-header-style="{'minResolution': 991}" data-sticky-header-style-active="{'margin-left': '190px'}" data-sticky-header-style-deactive="{'margin-left': '0'}">
+											<div class="header-nav-main header-nav-main-square header-nav-main-dropdown-no-borders header-nav-main-dropdown-arrow header-nav-main-effect-3 header-nav-main-sub-effect-1">
+												<nav class="collapse">
+													<ul class="nav nav-pills" id="mainNav">
+														<li class="dropdown">
+															<a class="dropdown-item dropdown-toggle" href="index.html">
+																How it works
+															</a>
+														</li>
+														<li class="dropdown dropdown-mega">
+															<a class="dropdown-item dropdown-toggle" href="{% url 'prohibited-page' %}">
+																Prohibited Items
+															</a>
+															
+														</li>
+														<li class="dropdown">
+															<a class="dropdown-item dropdown-toggle" href="{% url 'aboutus-page' %}">
+																About US
+															</a>
+														</li>
+
+													</ul>
+												</nav>
+											</div>
+											<button class="btn header-btn-collapse-nav" data-toggle="collapse" data-target=".header-nav-main nav">
+												<i class="fas fa-bars"></i>
+											</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="container" id="searchformresize"></div>
+			</header>
+			
+				
+			</div>
+			{% if messages %}
+		        {% for message in messages %}
+		        	<div class="container py-2">
+						<div class="row">
+							<div class="col">
+								<div class="row">
+									<div class="col pb-3">
+						                <div class="alert alert-{{ message.tags }}" style=" display: flex; justify-content: center; align-items: center; " >
+						                    <h6><b>{{ message }}</b></h6>
+						                </div>
+						            </div>
+					       		</div>        
+			            	</div>
+			        	</div>
+		            </div>
+		        {% endfor %}
+		    {% endif %}
+
+			{% block content %}{% endblock %}
+			
+			{% if delete_footer %}
+
+			{% else %}
+			<footer id="footer">
+				<div class="container my-4">
+					<div class="row pt-5 py-lg-5">
+						<div class="col-5 col-md-6 col-lg-3 mb-5 mb-lg-0">
+							<h5 class="text-6 text-transform-none font-weight-light text-color-light mb-4">Help</h5>
+							<!-- <p class="text-4 mb-0">Porto Template 123</p>
+							<p class="text-4 mb-0">Porto Blvd, Suite</p>
+							<p class="text-4 mb-0">New York</p> -->
+							<a href="{% url 'contact-page' %}" ><p class="text-4 mb-0">Contact US</p></a>
+							<a href="#" ><p class="text-4 mb-0">FAQ</p></a>
+							<a href="{% url 'prohibited-page' %}" ><p class="text-4 mb-0">Prohibited Items</p></a>
+						</div>
+						<div class="col-7 col-md-6 col-lg-3 mb-5 mb-lg-0">
+							<h5 class="text-6 text-transform-none font-weight-light text-color-light mb-4">Company</h5>
+							<a href="{% url 'aboutus-page' %}"><p class="text-4 mb-0">About US</p></a>
+						</div>
+						<div class="col-7 col-md-6 col-lg-3 mb-5 mb-lg-0">
+							<h5 class="text-6 text-transform-none font-weight-light text-color-light mb-4">Services</h5>
+							<a href="#"><p class="text-4 mb-0">How it works</p></a>
+							
+						</div>
+						<div class="col-5 col-md-6 col-lg-3">
+							<h5 class="text-6 text-transform-none font-weight-light text-color-light mb-4">Social Media</h5>
+							<ul class="footer-social-icons social-icons m-0">
+								<li class="social-icons-facebook"><a href="http://www.facebook.com/" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a></li>
+								<li class="social-icons-twitter"><a href="http://www.twitter.com/" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a></li>
+								<li class="social-icons-linkedin"><a href="http://www.linkedin.com/" target="_blank" title="Linkedin"><i class="fab fa-linkedin-in"></i></a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="container">
+					<div class="footer-copyright footer-copyright-style-2 pb-4">
+						<div class="py-2">
+							<div class="row py-4">
+								<div class="col d-flex align-items-center justify-content-center mb-4 mb-lg-0">
+									<p>© Copyright 2021. All Rights Reserved. <a href="{% url 'privacy-page' %}">Privacy Policy</a> | <a href="{% url 'tandc-page' %}">Terms and Conditions</a></p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</footer>
+			{% endif %}
+		</div>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script type="text/javascript">
+
+			function submitform(){
+				var form = document.getElementById("postform");
+				form.submit();
+			}
+			
+		</script>
+		 <script type="text/javascript">
+			
+
+				$(window).on('resize', function() {
+					if($(window).width()<500)
+					{
+						
+						
+						document.getElementById('searchform').innerHTML = '';
+						document.getElementById('searchformresize').innerHTML = `<form method="POST" action="{% url 'search-page' %}" id="postform">
+									{% csrf_token %}
+									<div class="search" style="width: 100%;"><input type="text" class="search-input" value="{{search_query}}"  name="search" placeholder="Search products on Amazon.com or past URL"><a href="#" onclick="submitform()" class="search-icon" type="submit"><i class="fa fa-search"></i></a></div>
+								</form>`;
+						
+					} else {
+						
+						
+						document.getElementById('searchformresize').innerHTML = '';
+						document.getElementById('searchform').innerHTML = `<form method="POST" action="{% url 'search-page' %}" id="postform">
+									{% csrf_token %}
+									<div class="search" style="width: 600px; margin-left: 100px;"><input type="text" class="search-input" value="{{search_query}}"  name="search" placeholder="Search products on Amazon.com or past URL"><a href="#" onclick="submitform()" class="search-icon" type="submit"><i class="fa fa-search"></i></a></div>
+								</form>`;
+					}
+				});
+				$(window).on('load', function() {
+					if($(window).width()<500)
+					{
+						
+						
+						document.getElementById('searchform').innerHTML = '';
+						document.getElementById('searchformresize').innerHTML = `<form method="POST" action="{% url 'search-page' %}" id="postform">
+									{% csrf_token %}
+									<div class="search" style="width: 100%;"><input type="text" class="search-input" value="{{search_query}}"  name="search" placeholder="Search products on Amazon.com or past URL"><a href="#" onclick="submitform()" class="search-icon" type="submit"><i class="fa fa-search"></i></a></div>
+								</form>`;
+						
+					} else {
+						
+						
+						document.getElementById('searchformresize').innerHTML = '';
+						document.getElementById('searchform').innerHTML = `<form method="POST" action="{% url 'search-page' %}" id="postform">
+									{% csrf_token %}
+									<div class="search" style="width: 600px; margin-left: 100px;"><input type="text" class="search-input" value="{{search_query}}"  name="search" placeholder="Search products on Amazon.com or past URL"><a href="#" onclick="submitform()" class="search-icon" type="submit"><i class="fa fa-search"></i></a></div>
+								</form>`;
+					}
+				});
+			</script>
+		<!-- Vendor -->
+		<script src="{% static 'users/vendor/jquery/jquery.min.js' %}"></script>
+		<script src="{% static 'users/vendor/jquery.appear/jquery.appear.min.js' %}"></script>
+		<script src="{% static 'users/vendor/jquery.easing/jquery.easing.min.js' %}"></script>
+		<script src="{% static 'users/vendor/jquery.cookie/jquery.cookie.min.js' %}"></script>
+		<script src="{% static 'users/vendor/popper/umd/popper.min.js' %}"></script>
+		<script src="{% static 'users/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+		<script src="{% static 'users/vendor/common/common.min.js' %}"></script>
+		<script src="{% static 'users/vendor/jquery.validation/jquery.validate.min.js' %}"></script>
+		<script src="{% static 'users/vendor/jquery.easy-pie-chart/jquery.easypiechart.min.js' %}"></script>
+		<script src="{% static 'users/vendor/jquery.gmap/jquery.gmap.min.js' %}"></script>
+		<script src="{% static 'users/vendor/jquery.lazyload/jquery.lazyload.min.js' %}"></script>
+		<script src="{% static 'users/vendor/isotope/jquery.isotope.min.js' %}"></script>
+		<script src="{% static 'users/vendor/owl.carousel/owl.carousel.min.js' %}"></script>
+		<script src="{% static 'users/vendor/magnific-popup/jquery.magnific-popup.min.js' %}"></script>
+		<script src="{% static 'users/vendor/vide/jquery.vide.min.js' %}"></script>
+		<script src="{% static 'users/vendor/vivus/vivus.min.js' %}"></script>
+		<script src="{% static 'users/vendor/bootstrap-star-rating/js/star-rating.min.js' %}"></script>
+		<script src="{% static 'users/vendor/bootstrap-star-rating/themes/krajee-fas/theme.min.js' %}"></script>
+
+		<script src="{% static 'users/vendor/circle-flip-slideshow/js/jquery.flipshow.min.js' %}"></script>
+		<script src="{% static 'users/vendor/nivo-slider/jquery.nivo.slider.min.js' %}"></script>
+		<script src="{% static 'users/vendor/rs-plugin/js/jquery.themepunch.tools.min.js' %}"></script>
+		<script src="{% static 'users/vendor/rs-plugin/js/jquery.themepunch.revolution.min.js' %}"></script>
+		<script src="{% static 'users/vendor/circle-flip-slideshow/js/jquery.flipshow.min.js' %}"></script>
+		<script src="{% static 'users/js/views/view.home.js' %}"></script>
+		
+		<!-- Theme Base, Components and Settings -->
+		<script src="{% static 'users/js/theme.js' %}"></script>
+
+		<!-- Current Page Vendor and Views -->
+		<script src="{% static 'users/js/views/view.shop.js' %}"></script>
+		
+		<!-- Theme Custom -->
+		<script src="{% static 'users/js/custom.js' %}"></script>
+		
+		<!-- Theme Initialization Files -->
+		<script src="{% static 'users/js/theme.init.js' %}"></script>
+
+		<!-- Google Analytics: Change UA-XXXXX-X to be your site's ID. Go to http://www.google.com/analytics/ for more information.
+		<script>
+			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+		
+			ga('create', 'UA-12345678-1', 'auto');
+			ga('send', 'pageview');
+		</script>
+		 -->
+		 <script type="text/javascript">
+		 	
+		 	$(document).ready(function() {
+			  $.ajax({
+		            type: 'GET',
+		            url: '/get_item_number/',
+		            datatype: 'json',
+		            success: function (res) {
+		            	console.log(res.item_number)
+		            	if (parseFloat(res.item_number) > 0) {
+		            		document.getElementById('numbercart').innerHTML = `<span class="cart-qty">${res.item_number}</span>`
+		            	}else{
+		            		document.getElementById('numbercart').innerHTML = ''
+		            	}
+		            }
+		        })
+
+			});
+		 </script>
+
+	</body>
+</html>

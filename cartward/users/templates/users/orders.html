@@ -1,0 +1,127 @@
+{% extends "users/base.html" %}
+{% load static %}
+{% block content %}
+
+{% for obj in page_obj%}
+    <div class="container py-2">
+        <div class="card card-default">
+            <div class="card-header">
+                <h4 class="card-title m-0" >
+                    <a class="accordion-toggle"  data-toggle="collapse" data-parent="#" href="#">
+                        Order# {{obj.order.pk}}
+                    </a>
+                    
+                </h4>
+                
+                <p></p>
+            </div>
+            <div id="collapse1One" class="collapse show">
+                <div class="card-body">
+                    <div role="main" class="main shop py-4">
+
+                        <div class="container">
+                    
+                            <div class="row">
+                                <div class="col">
+                    
+                                    <div>
+                                        <div class="row">
+                                            <div class="col">
+                                                <div >
+                                                    <div class="box-content">
+                                                        
+                                                            <table class="shop_table cart">
+                                                                <thead>
+                                                                    <tr>
+                                                                        
+                                                                        <th class="product-thumbnail">
+                                                                            &nbsp;
+                                                                        </th>
+                                                                        <th class="product-name">
+                                                                            Product
+                                                                        </th>
+                                                                        <!-- <th class="product-price">
+                                                                            Price
+                                                                        </th>
+                                                                        <th class="product-quantity">
+                                                                            Quantity
+                                                                        </th> -->
+                                                                        <th class="product-subtotal">
+                                                                            Quantity
+                                                                        </th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    {% for item in obj.product%}
+                                                                        <tr class="cart_table_item">
+                                                                            
+                                                                            <td class="product-thumbnail">
+                                                                                <a href="{% url 'product-page' item.asin|slugify %}">
+                                                                                    <img width="100" height="100" alt="" class="img-fluid" src="{{item.images.small}}">
+                                                                                </a>
+                                                                            </td>
+                                                                            <td class="product-name">
+                                                                                <a href="{% url 'product-page' item.asin|slugify %}">{{item.name}}</a>
+                                                                            </td>
+                                                                            <!-- <td class="product-price">
+                                                                                <span class="amount">2</span>
+                                                                            </td>
+                                                                            <td class="product-price" style="padding-left: 40px;">
+                                                                                2
+                                                                            </td> -->
+                                                                            <td class="product-subtotal" style="padding-left: 40px;">
+                                                                                <span class="amount">{{item.qty}}</span>
+                                                                            </td>
+                                                                        </tr>
+                                                                    {% endfor %}
+                                                                    
+                                                                    
+                                                                    <tr>
+                                                                        <td class="actions" colspan="6">
+                                                                            <div class="actions-continue">
+                                                                                <a href="{% url 'orderdetails-page' pk=obj.order.pk %}"><button class="btn btn-xl btn-light pr-4 pl-4 text-2 font-weight-semibold text-uppercase">View Order</button></a>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        <input hidden='true' value="{{obj.items}}">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                    
+                                </div>
+                            </div>
+                    
+                        </div>
+                    
+                    </div>
+                </div>
+            </div>
+        </div> 
+    </div>
+{% endfor %}
+<div class="col" style="display: flex; justify-content: center;">
+    <ul class="pagination float-right">
+        {% if page_obj.has_previous %}
+            <li class="page-item"> <a href="?page={{ page_obj.previous_page_number }}"><i class="fas fa-angle-left"></i></a></li>
+        {% endif %}
+        <!-- <li class="page-item active"><a class="page-link" href="#">1</a></li>
+        <li class="page-item"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li> -->
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}"><i class="fas fa-angle-right"></i></a>
+        {% endif %}
+    </ul>
+</div>
+
+
+
+<script>
+    window.addEventListener('load', function() {
+        
+    })
+</script>
+{% endblock content %}

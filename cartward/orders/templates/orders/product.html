@@ -1,0 +1,200 @@
+{% extends "users/base.html" %}
+{% load static %}
+{% block content %}
+<style type="text/css">
+	.checkmark__circle {
+		  stroke-dasharray: 166;
+		  stroke-dashoffset: 166;
+		  stroke-width: 2;
+		  stroke-miterlimit: 10;
+		  stroke: green;
+		  fill: none;
+		  animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+		}
+
+		.checkmark {
+		  width: 36px;
+		  height: 36px;
+		  border-radius: 50%;
+		  display: block;
+		  stroke-width: 2;
+		  stroke: green;
+		  stroke-miterlimit: 10;
+		  margin: 10% auto;
+		  box-shadow: inset 0px 0px 0px #3788C6;
+		  animation: fill .4s ease-in-out .4s forwards, scale .3s ease-in-out .9s both;
+		}
+
+		.checkmark__check {
+		  transform-origin: 50% 50%;
+		  stroke-dasharray: 48;
+		  stroke-dashoffset: 48;
+		  animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
+		}
+
+		@keyframes stroke {
+		  100% {
+		    stroke-dashoffset: 0;
+		  }
+		}
+		@keyframes scale {
+		  0%, 100% {
+		    transform: none;
+		  }
+		  50% {
+		    transform: scale3d(1.1, 1.1, 1);
+		  }
+		}
+		@keyframes fill {
+		  100% {
+		    box-shadow: inset 0px 0px 0px 30px #fff;
+		  }
+		}
+</style>
+			<div role="main" class="main shop py-4">
+
+				<div class="container">
+
+					<div class="row">
+						<div class="col-lg-6">
+
+							<div data-plugin-options="{'items': 1}">
+								<div>
+									<img alt="" class="img-fluid" src="{{product.images.large}}">
+								</div>
+								<!-- <div>
+									<img alt="" class="img-fluid" src="{% static 'users/img/products/product-grey-7-2.jpg' %}">
+								</div>
+								<div>
+									<img alt="" class="img-fluid" src="{% static 'users/img/products/product-grey-7-3.jpg' %}">
+								</div> -->
+							</div>
+
+						</div>
+
+						<div class="col-lg-6">
+
+							<div class="summary entry-summary">
+
+								<h1 class="mb-0 font-weight-bold text-7">{{product.name}}</h1>
+
+								<div class="pb-0 clearfix">
+									<div title="Rated {{product.review_stars}} out of 5" class="float-left">
+										<input type="text" class="d-none" value="{{product.review_stars}}" title="" data-plugin-star-rating data-plugin-options="{'displayOnly': true, 'color': 'primary', 'size':'xs'}">
+									</div>
+
+									<div class="review-num">
+										<span class="count" itemprop="ratingCount">{{product.review_count}}</span> reviews
+									</div>
+								</div>
+
+								<p class="price">
+									{% if product.fiat_price == None %}
+										
+									{% else %}
+										<span class="amount">${{product.fiat_price}}</span>
+									{% endif %}
+								</p>
+
+								<!-- <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tempus nibh sed elimttis adipiscing. Fusce in hendrerit purus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tempus nibh sed elimttis adipiscing. Fusce in hendrerit purus. </p> -->
+
+								<form id="addtocart" method="POST" class="cart">
+									{% csrf_token %}
+									<!-- <div class="form-row">
+										<div class="quantity quantity-lg">
+											<input type="button" class="minus" value="-">
+											<input type="text" class="input-text qty text" title="Qty" value="1" name="quantity" min="1" step="1">
+											<input type="button" class="plus" value="+">
+										</div>
+									</div> -->
+									<!-- <div class="form-row">
+										<div class="form-group col">
+											<label class="font-weight-bold text-dark text-2">Size</label>
+											<select class="form-control">
+												<option value="">Select Size</option>
+											</select>
+										</div>
+									</div> -->
+									{{raw|safe}}
+									<input id="spec" type="" name="specification" value="{{product}}" style="display: none;">
+									{% if product.fiat_price == None %}
+										<button disabled="" href="#" class="btn btn-primary btn-modern text-uppercase">Unavailable</button>
+									{% else %}
+										<div class="row" style="padding-left: 15px;">
+											<button id="tocart" type="submit" href="#" class="btn btn-primary btn-modern text-uppercase">ADD TO CART</button>
+											<div style="padding-left: 15px" id="completed"></div>
+										</div>
+										
+									{% endif %}
+								</form>
+
+								<!-- <div class="product-meta">
+									<span class="posted-in">Categories: <a rel="tag" href="#">Accessories</a>, <a rel="tag" href="#">Bags</a>.</span>
+								</div> -->
+
+							</div>
+
+
+						</div>
+					</div>
+					<div class="row">
+						<div class="col">
+							<div class="tabs tabs-product mb-2">
+								<!-- <ul class="nav nav-tabs">
+									<li class="nav-item active"><a class="nav-link py-3 px-4" href="#productDescription" data-toggle="tab">Description</a></li>
+								</ul> -->
+								<div class="tab-content p-0">
+									<div class="tab-pane p-4 active" id="productDescription">
+										<h5>Product Description</h5>
+										<p>{{product.description}}</p>
+										
+									</div>
+									
+								
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+			<script type="text/javascript">
+				function check_asin(select){
+					var asin = select.value;
+					base_url = window.location.origin
+					console.log(asin)
+					document.location.href = base_url +"/"+"US/product/" + asin;
+				}
+				
+				$(document).on('submit', '#addtocart', function (e) {
+					e.preventDefault();
+					$.ajax({
+		                type: 'POST',
+		                url: '/add_to_cart/',
+		                data: {
+		                    specification: $("#spec").val(),
+		                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+		                },
+		                datatype: 'json',
+		                success: function (res) {
+		                     document.getElementById("tocart").disabled = true;
+	                         document.getElementById("completed").innerHTML = '<svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52"><circle   class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/><path  class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/></svg>'
+	                         $.ajax({
+					            type: 'GET',
+					            url: '/get_item_number/',
+					            datatype: 'json',
+					            success: function (res) {
+					            	console.log(res.item_number)
+					            	if (parseFloat(res.item_number) > 0) {
+					            		document.getElementById('numbercart').innerHTML = `<span class="cart-qty">${res.item_number}</span>`
+					            	}else{
+					            		document.getElementById('numbercart').innerHTML = ''
+					            	}
+					            }
+					        })
+		                }
+		            })
+				})
+			</script>
+{% endblock content %}

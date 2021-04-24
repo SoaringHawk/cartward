@@ -1,0 +1,22 @@
+{% extends "users/base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+
+<div class="col-lg-9 order-1 order-lg-2">
+							
+	<div class="row justify-content-md-center">
+		<div class="col-md-9">
+			<div class="featured-box featured-box-primary text-left mt-0">
+				<div class="box-content">
+					<h4 class="color-primary font-weight-semibold text-4 text-uppercase mb-0">Lost Password?</h4>
+					<p class="text-2 opacity-7">Your password has been set successfully, <a href="{% url 'signin-register' %}" class="alert-link">Login</a></p>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+{% endblock content %}

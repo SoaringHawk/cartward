@@ -1,0 +1,55 @@
+{% extends "users/base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+    <div class="container py-2">
+
+        <div class="row">
+            <div class="col-lg-3 mt-4 mt-lg-0">
+
+                <div class="d-flex justify-content-center mb-4">
+                    <div class="profile-image-outer-container">
+                        <div class="profile-image-inner-container bg-color-primary">
+                            <img src="{% static 'users/img/avatars/avatar.jpg'%}">
+                            <span class="profile-image-button bg-color-dark">
+                                <i class="fas fa-camera text-light"></i>
+                            </span>
+                        </div>
+                        <input type="file" id="file" class="profile-image-input">
+                    </div>
+                </div> 
+                <h4 style="padding-left: 80px;">Balance: $0</h4>
+                 <aside class="sidebar mt-2" id="sidebar">
+                    <ul class="nav nav-list flex-column mb-5">
+                        <li class="nav-item"><a class="nav-link text-dark active" href="#">My Profile</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#">Address Book</a></li>
+                        <!-- <li class="nav-item"><a class="nav-link" href="#">Billing</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#">Invoices</a></li> -->
+                    </ul>
+                </aside>
+
+            </div>
+            <div class="col-lg-4 mb-4 mb-lg-0">
+
+                <h4>Addresses</h4>
+                <div class="accordion without-bg" id="accordion7">
+                    <div class="card card-default">
+                        <!-- <div class="card-header">
+                            <h4 class="card-title m-0">
+                                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion7" href="#collapse7One">
+                                    Accordion Title 1
+                                </a>
+                            </h4>
+                        </div> -->
+                        <div id="collapse7One" class="collapse show">
+                            <div class="card-body">
+                                <p class="mb-0">Donec tellus massa, tristique sit amet condim vel, facilisis quis sapien. Praesent id enim sit amet odio vulputate eleifend in in tortor. Donec tellus massa, tristique sit amet condim vel, facilisis quis sapien. Praesent id enim sit amet odio vulputate eleifend in in tortor. Donec tellus massa, tristique sit amet condim vel, facilisis quis sapien.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock content %}

@@ -1,0 +1,66 @@
+{% extends "users/base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+	<div role="main" class="main shop py-4">
+
+				<div class="container">
+
+					<div class="row">
+						<div class="col">
+							<div >
+								<div class="row">
+									<div class="col-md-6" >
+										<div class="featured-box featured-box-primary text-left mt-2">
+											<div class="box-content">
+												<h4 class="color-primary font-weight-semibold text-4 text-uppercase mb-3">I'm a Returning Customer</h4>
+												<form method="POST" >
+														{% csrf_token %}
+							                            <fieldset class="form-group">
+							                                {{ form1|crispy }}
+							                            </fieldset>
+													<div class="form-row">
+														<div class="form-group col">
+															<a class="float-right" href="{% url 'password_reset' %}">(Lost Password?)</a>
+														</div>
+													</div>
+													<div class="form-row">
+														<div class="form-group col-lg-12">
+															<input type="submit" value="Login" class="btn btn-primary float-right" data-loading-text="Loading...">
+														</div>
+													</div>
+												</form>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="featured-box featured-box-primary text-left mt-2">
+											<div class="box-content">
+												<h4 class="color-primary font-weight-semibold text-4 text-uppercase mb-3">Register An Account</h4>
+												<form method="POST">
+													{% csrf_token %}
+						                            <fieldset class="form-group">
+						                                {{ form|crispy }}
+						                            </fieldset>
+													
+													<div class="form-row">
+														
+														<div class="form-group col-lg-12">
+															<input type="" name="register" value="true" hidden="true">
+															<input type="submit" value="Register" class="btn btn-primary float-right" data-loading-text="Loading...">
+														</div>
+													</div>
+												</form>
+											</div>
+										</div>
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+{% endblock content %}

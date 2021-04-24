@@ -1,0 +1,565 @@
+{% extends "users/base.html" %}
+{% load static %}
+{% block content %}
+	<div role="main" class="main shop py-4">
+
+				<div class="container">
+
+					<div class="row">
+						<div class="col">
+							<p>Returning customer? <a href="shop-login.html">Click here to login.</a></p>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-lg-9">
+
+							<div class="accordion accordion-modern" id="accordion">
+								<div class="card card-default">
+									<div class="card-header">
+										<h4 class="card-title m-0">
+											<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+												International Shipping Address
+											</a>
+										</h4>
+									</div>
+									<div id="collapseOne" class="collapse show">
+										<div class="card-body">
+											<form action="{% url 'order-page' %}" id="frmBillingAddress" method="POST">
+												{% csrf_token %}
+																	<div class="form-row">
+																		<div class="form-group col-lg-6">
+																			<label class="font-weight-bold text-dark text-2">First Name</label>
+																			<input type="text" name="firstname" value="" class="form-control">
+																		</div>
+																		<div class="form-group col-lg-6">
+																			<label class="font-weight-bold text-dark text-2">Last Name</label>
+																			<input type="text" name="lastname" value="" class="form-control">
+																		</div>
+																	</div>
+																	<div class="form-row">
+																		<div class="form-group col">
+																			<label class="font-weight-bold text-dark text-2">Address Line 1</label>
+																			<input type="text" name="addressline1" value="" class="form-control">
+																		</div>
+																	</div>
+																	<div class="form-row">
+																		<div class="form-group col">
+																			<label class="font-weight-bold text-dark text-2">Address Line 2 (optional)</label>
+																			<input type="text" name="addressline2" value="" class="form-control">
+																		</div>
+																	</div>
+																	<div class="form-row">
+																		<div class="form-group col-lg-6">
+																			<label class="font-weight-bold text-dark text-2">City</label>
+																			<input type="text" name="city" value="" class="form-control">
+																		</div>
+																		<div class="form-group col-lg-6">
+																			<label class="font-weight-bold text-dark text-2">State or Province</label>
+																			<input type="text" name="state" value="" class="form-control">
+																		</div>
+																	</div>
+																	<div class="form-row">
+																		<div class="form-group col-lg-6">
+																			<label class="font-weight-bold text-dark text-2">Postal Code/ Zip Code</label>
+																			<input type="text" name="zipcode" value="" class="form-control">
+																		</div>
+																		<div class="form-group col">
+																			<input hidden type="text" value="{{countryselected}}" id="selected">
+																			<input hidden type="text" value="{{stateselected}}" id="selected1">
+																			<input hidden type="text" value="{{postalselected}}" id="selected2">
+																			<label class="font-weight-bold text-dark text-2">Country</label>
+																			<select id="country" name="country" class="form-control">
+																				<option value="none">Select a country</option>
+																				<option value="AF">Afghanistan</option>
+																				<option value="AL">Albania</option>
+																				<option value="DZ">Algeria</option>
+																				<option value="AS">American Samoa</option>
+																				<option value="AD">Andorra</option>
+																				<option value="AO">Angola</option>
+																				<option value="AI">Anguilla</option>
+																				<option value="AQ">Antarctica</option>
+																				<option value="AG">Antigua and Barbuda</option>
+																				<option value="AR">Argentina</option>
+																				<option value="AM">Armenia</option>
+																				<option value="AW">Aruba</option>
+																				<option value="AC">Ascension Island</option>
+																				<option value="AU">Australia</option>
+																				<option value="AT">Austria</option>
+																				<option value="AZ">Azerbaijan</option>
+																				<option value="BS">Bahamas</option>
+																				<option value="BH">Bahrain</option>
+																				<option value="BD">Bangladesh</option>
+																				<option value="BB">Barbados</option>
+																				<option value="BE">Belgium</option>
+																				<option value="BZ">Belize</option>
+																				<option value="BJ">Benin</option>
+																				<option value="BM">Bermuda</option>
+																				<option value="BT">Bhutan</option>
+																				<option value="BO">Bolivia</option>
+																				<option value="BQ">Bonaire, Sint Eustatius & Saba</option>
+																				<option value="BA">Bosnia and Herzegovina</option>
+																				<option value="BW">Botswana</option>
+																				<option value="BR">Brazil</option>
+																				<option value="VG">British Virgin Islands</option>
+																				<option value="BN">Brunei Darussalam</option>
+																				<option value="BG">Bulgaria</option>
+																				<option value="BF">Burkina Faso</option>
+																				<option value="BI">Burundi</option>
+																				<option value="KH">Cambodia</option>
+																				<option value="CM">Cameroon</option>
+																				<option value="CA">Canada</option>
+																				<option value="CV">Cape Verde</option>
+																				<option value="KY">Cayman Islands</option>
+																				<option value="CF">Central African Republic</option>
+																				<option value="TD">Chad</option>
+																				<option value="CL">Chile</option>
+																				<option value="CN">China</option>
+																				<option value="CX">Christmas Island</option>
+																				<option value="CO">Colombia</option>
+																				<option value="KM">Comoros</option>
+																				<option value="CG">Congo</option>
+																				<option value="CD">Congo, Democratic Republic of the</option>
+																				<option value="CK">Cook Islands</option>
+																				<option value="CR">Costa Rica</option>
+																				<option value="CI">Cote d'Ivoire</option>
+																				<option value="HR">Croatia</option>
+																				<option value="CW">Curacao</option>
+																				<option value="CY">Cyprus</option>
+																				<option value="CZ">Czech Republic</option>
+																				<option value="DJ">Djibouti</option>
+																				<option value="DM">Dominica</option>
+																				<option value="DO">Dominican Republic</option>
+																				<option value="EC">Ecuador</option>
+																				<option value="EG">Egypt</option>
+																				<option value="SV">El Salvador</option>
+																				<option value="GQ">Equatorial Guinea</option>
+																				<option value="ER">Eritrea</option>
+																				<option value="EE">Estonia</option>
+																				<option value="ET">Ethiopia</option>
+																				<option value="FK">Falkland Islands</option>
+																				<option value="FO">Faroe Islands</option>
+																				<option value="FJ">Fiji</option>
+																				<option value="FI">Finland</option>
+																				<option value="FR">France</option>
+																				<option value="GF">French Guiana</option>
+																				<option value="PF">French Polynesia</option>
+																				<option value="GA">Gabon</option>
+																				<option value="GM">Gambia</option>
+																				<option value="GE">Georgia</option>
+																				<option value="DE">Germany</option>
+																				<option value="GH">Ghana</option>
+																				<option value="GI">Gibraltar</option>
+																				<option value="GR">Greece</option>
+																				<option value="GD">Grenada</option>
+																				<option value="GP">Guadeloupe</option>
+																				<option value="GU">Guam</option>
+																				<option value="GT">Guatemala</option>
+																				<option value="GG">Guernsey</option>
+																				<option value="GN">Guinea</option>
+																				<option value="GY">Guyana</option>
+																				<option value="HT">Haiti</option>
+																				<option value="HN">Honduras</option>
+																				<option value="HK">Hong Kong</option>
+																				<option value="HU">Hungary</option>
+																				<option value="IS">Iceland</option>
+																				<option value="IN">India</option>
+																				<option value="ID">Indonesia</option>
+																				<option value="IQ">Iraq</option>
+																				<option value="IE">Ireland</option>
+																				<option value="IM">Isle of Man</option>
+																				<option value="IT">Italy</option>
+																				<option value="JM">Jamaica</option>
+																				<option value="JP">Japan</option>
+																				<option value="JE">Jersey</option>
+																				<option value="JO">Jordan</option>
+																				<option value="KZ">Kazakhstan</option>
+																				<option value="KI">Kiribati</option>
+																				<option value="KR">Korea</option>
+																				<option value="KW">Kuwait</option>
+																				<option value="KG">Kyrgyzstan</option>
+																				<option value="LA">Laos</option>
+																				<option value="LV">Latvia</option>
+																				<option value="LB">Lebanon</option>
+																				<option value="LS">Lesotho</option>
+																				<option value="LR">Liberia</option>
+																				<option value="LY">Libya</option>
+																				<option value="LI">Liechtenstein</option>
+																				<option value="LT">Lithuania</option>
+																				<option value="LU">Luxembourg</option>
+																				<option value="MO">Macau</option>
+																				<option value="MK">Macedonia</option>
+																				<option value="MG">Madagascar</option>
+																				<option value="MW">Malawi</option>
+																				<option value="MY">Malaysia</option>
+																				<option value="MV">Maldives</option>
+																				<option value="ML">Mali</option>
+																				<option value="MT">Malta</option>
+																				<option value="MH">Marshall Islands</option>
+																				<option value="MQ">Martinique</option>
+																				<option value="MR">Mauritania</option>
+																				<option value="MU">Mauritius</option>
+																				<option value="YT">Mayotte</option>
+																				<option value="MX">Mexico</option>
+																				<option value="FM">Micronesia</option>
+																				<option value="MD">Moldova</option>
+																				<option value="MC">Monaco</option>
+																				<option value="MN">Mongolia</option>
+																				<option value="ME">Montenegro</option>
+																				<option value="MS">Montserrat</option>
+																				<option value="MA">Morocco</option>
+																				<option value="MZ">Mozambique</option>
+																				<option value="NA">Namibia</option>
+																				<option value="NR">Nauru</option>
+																				<option value="NP">Nepal</option>
+																				<option value="NL">Netherlands</option>
+																				<option value="NC">New Caledonia</option>
+																				<option value="NZ">New Zealand</option>
+																				<option value="NI">Nicaragua</option>
+																				<option value="NE">Niger</option>
+																				<option value="NG">Nigeria</option>
+																				<option value="NU">Niue</option>
+																				<option value="MP">Northern Mariana Islands (Saipan)</option>
+																				<option value="NO">Norway</option>
+																				<option value="OM">Oman</option>
+																				<option value="PK">Pakistan</option>
+																				<option value="PW">Palau</option>
+																				<option value="PA">Panama</option>
+																				<option value="PG">Papua New Guinea</option>
+																				<option value="PY">Paraguay</option>
+																				<option value="PE">Peru</option>
+																				<option value="PH">Philippines</option>
+																				<option value="PN">Pitcairn Islands</option>
+																				<option value="PL">Poland</option>
+																				<option value="PT">Portugal</option>
+																				<option value="PR">Puerto Rico</option>
+																				<option value="QA">Qatar</option>
+																				<option value="RE">Reunion</option>
+																				<option value="RO">Romania</option>
+																				<option value="RU">Russian Federation</option>
+																				<option value="RW">Rwanda</option>
+																				<option value="BL">Saint Barthelemy</option>
+																				<option value="SH">Saint Helena</option>
+																				<option value="KN">Saint Kitts and Nevis</option>
+																				<option value="LC">Saint Lucia</option>
+																				<option value="MF">Saint Martin</option>
+																				<option value="PM">Saint Pierre and Miquelon</option>
+																				<option value="VC">Saint Vincent and Grenadines</option>
+																				<option value="WS">Samoa</option>
+																				<option value="SM">San Marino</option>
+																				<option value="ST">Sao Tome and Principe</option>
+																				<option value="SA">Saudi Arabia</option>
+																				<option value="SN">Senegal</option>
+																				<option value="RS">Serbia</option>
+																				<option value="SC">Seychelles</option>
+																				<option value="SL">Sierra Leone</option>
+																				<option value="SG">Singapore</option>
+																				<option value="SX">Sint Maarten</option>
+																				<option value="SK">Slovakia</option>
+																				<option value="SI">Slovenia</option>
+																				<option value="SB">Solomon Islands</option>
+																				<option value="SO">Somalia</option>
+																				<option value="ZA">South Africa</option>
+																				<option value="ES">Spain</option>
+																				<option value="LK">Sri Lanka</option>
+																				<option value="SR">Suriname</option>
+																				<option value="SZ">Swaziland</option>
+																				<option value="SE">Sweden</option>
+																				<option value="CH">Switzerland</option>
+																				<option value="TW">Taiwan</option>
+																				<option value="TJ">Tajikistan</option>
+																				<option value="TZ">Tanzania</option>
+																				<option value="TL">Timor-Leste</option>
+																				<option value="TG">Togo</option>
+																				<option value="TO">Tonga</option>
+																				<option value="TA">Tristan da Cunha</option>
+																				<option value="TN">Tunisia</option>
+																				<option value="TR">Turkey</option>
+																				<option value="TM">Turkmenistan</option>
+																				<option value="TC">Turks and Caicos Islands</option>
+																				<option value="TV">Tuvalu</option>
+																				<option value="VI">U.S. Virgin Islands</option>
+																				<option value="UG">Uganda</option>
+																				<option value="UA">Ukraine</option>
+																				<option value="AE">United Arab Emirates	</option>
+																				<option value="GB">United Kingdom	</option>
+																				<option value="US">United States of America	</option>
+																				<option value="UY">Uruguay</option>
+																				<option value="UZ">Uzbekistan</option>
+																				<option value="VU">Vanuatu</option>
+																				<option value="VA">Vatican City	</option>
+																				<option value="VE">Venezuela</option>
+																				<option value="VN">Vietnam</option>
+																				<option value="WF">Wallis and Futuna</option>
+																				<option value="YE">Yemen</option>
+																				<option value="ZM">Zambia</option>
+																			</select>
+																		</div>
+																	</div>
+																	
+																	<div class="form-row">
+																		<div class="form-group col">
+																			<label class="font-weight-bold text-dark text-2">Telephone Number</label>
+																			<input name="phonenumber" type="text" value="" class="form-control">
+																		</div>
+																	</div>
+																	<!-- <div class="form-row">
+																		<div class="form-group col">
+																			<input type="submit" value="Continue" class="btn btn-xl btn-light pr-4 pl-4 text-2 font-weight-semibold text-uppercase float-right mb-2" data-loading-text="Loading...">
+																		</div>
+																	</div> -->
+																
+															</div>
+														</div>
+													</div>
+													<!-- <div class="card card-default">
+														<div class="card-header">
+															<h4 class="card-title m-0">
+																<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+																	Shipping Address
+																</a>
+															</h4>
+														</div>
+														<div id="collapseTwo" class="collapse">
+															<div class="card-body">
+																<form action="/" id="frmShippingAddress" method="post">
+																	<div class="form-row">
+																		<div class="col">
+																			<div class="custom-control custom-checkbox pb-3">
+																				<input type="checkbox" class="custom-control-input" id="shipbillingaddress">
+																				<label class="custom-control-label" for="shipbillingaddress">Ship to billing address?</label>
+																			</div>
+																		</div>
+																	</div>
+																	<div class="form-row">
+																		<div class="form-group col">
+																			<label class="font-weight-bold text-dark text-2">Country</label>
+																			<select class="form-control">
+																				<option value="">Select a country</option>
+																			</select>
+																		</div>
+																	</div>
+																	<div class="form-row">
+																		<div class="form-group col-lg-6">
+																			<label class="font-weight-bold text-dark text-2">First Name</label>
+																			<input type="text" value="" class="form-control">
+																		</div>
+																		<div class="form-group col-lg-6">
+																			<label class="font-weight-bold text-dark text-2">Last Name</label>
+																			<input type="text" value="" class="form-control">
+																		</div>
+																	</div>
+																	<div class="form-row">
+																		<div class="form-group col">
+																			<label class="font-weight-bold text-dark text-2">Company Name</label>
+																			<input type="text" value="" class="form-control">
+																		</div>
+																	</div>
+																	<div class="form-row">
+																		<div class="form-group col">
+																			<label class="font-weight-bold text-dark text-2">Address </label>
+																			<input type="text" value="" class="form-control">
+																		</div>
+																	</div>
+																	<div class="form-row">
+																		<div class="form-group col">
+																			<label class="font-weight-bold text-dark text-2">City </label>
+																			<input type="text" value="" class="form-control">
+																		</div>
+																	</div>
+																	<div class="form-row">
+																		<div class="form-group col">
+																			<input type="submit" value="Continue" class="btn btn-xl btn-light pr-4 pl-4 text-2 font-weight-semibold text-uppercase float-right mb-2" data-loading-text="Loading...">
+																		</div>
+																	</div>
+																</form>
+															</div>
+														</div>
+													</div> -->
+													<div class="card card-default">
+														<div class="card-header">
+															<h4 class="card-title m-0">
+																<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+																	Cart Review
+																</a>
+															</h4>
+														</div>
+														<div id="collapseThree" class="collapse">
+															<div class="card-body">
+																<table class="shop_table cart">
+																	<thead>
+																		<tr>
+																			<th class="product-thumbnail">
+																				&nbsp;
+																			</th>
+																			<th class="product-name">
+																				Product
+																			</th>
+																			<th class="product-price">
+																				Price
+																			</th>
+																			<th class="product-quantity">
+																				Quantity
+																			</th>
+																			<!-- <th class="product-subtotal">
+																				Total
+																			</th> -->
+																		</tr>
+																	</thead>
+																	<tbody>
+																		{% for item in cart %}
+																			<tr class="cart_table_item">
+																				<td class="product-thumbnail">
+																					<a href="{% url 'product-page' item.asin|slugify %}">
+																						<img width="100" height="100" alt="" class="img-fluid" src="{{item.images.small}}">
+																					</a>
+																				</td>
+																				<td class="product-name">
+																					<a href="{% url 'product-page' item.asin|slugify %}">{{item.name}}</a>
+																				</td>
+																				<td class="product-price">
+																					<span class="amount">${{item.fiat_price}}</span>
+																				</td>
+																				<td class="product-quantity">
+																					{{item.qty}}
+																				</td>
+																				<!-- <td class="product-subtotal">
+																					<span class="amount">$299</span>
+																				</td> -->
+																			</tr>
+																		{% endfor %}
+																		
+																		
+																	</tbody>
+																</table>
+												
+																<!-- <hr class="solid my-5">
+												
+																<h4 class="text-primary">Cart Totals</h4> -->
+																<!-- <table class="cart-totals">
+																	<tbody>
+																		<tr class="cart-subtotal">
+																			<th>
+																				<strong class="text-dark">Cart Subtotal</strong>
+																			</th>
+																			<td>
+																				<strong class="text-dark"><span class="amount">$431</span></strong>
+																			</td>
+																		</tr>
+																		<tr class="shipping">
+																			<th>
+																				Shipping
+																			</th>
+																			<td>
+																				Free Shipping<input type="hidden" value="free_shipping" id="shipping_method" name="shipping_method">
+																			</td>
+																		</tr>
+																		<tr class="total">
+																			<th>
+																				<strong class="text-dark">Order Total</strong>
+																			</th>
+																			<td>
+																				<strong class="text-dark"><span class="amount">$431</span></strong>
+																			</td>
+																		</tr>
+																	</tbody>
+																</table> -->
+												
+																<!-- <hr class="solid my-5"> -->
+												
+																<!-- <h4 class="text-primary">Payment</h4> -->
+												
+																<!-- <form action="/" id="frmPayment" method="post">
+																	<div class="form-row">
+																		<div class="form-group col">
+																			<div class="custom-control custom-checkbox">
+																				<input type="checkbox" class="custom-control-input" id="paymentdirectbank">
+																				<label class="custom-control-label" for="paymentdirectbank">Direct Bank Transfer</label>
+																			</div>
+																		</div>
+																	</div>
+																	<div class="form-row">
+																		<div class="form-group col">
+																			<div class="custom-control custom-checkbox">
+																				<input type="checkbox" class="custom-control-input" id="paymentcheque">
+																				<label class="custom-control-label" for="paymentcheque">Cheque Payment</label>
+																			</div>
+																		</div>
+																	</div>
+																	<div class="form-row">
+																		<div class="form-group col">
+																			<div class="custom-control custom-checkbox">
+																				<input type="checkbox" class="custom-control-input" id="paymentpaypal">
+																				<label class="custom-control-label" for="paymentpaypal">Paypal</label>
+																			</div>
+																		</div>
+																	</div>
+																</form> -->
+															</div>
+														</div>
+													</div>
+												</div>
+												<input hidden="true" name="service" value="{{service}}">
+												<div class="actions-continue">
+													<input type="submit" value="Place Order" name="proceed" class="btn btn-primary btn-modern text-uppercase mt-5 mb-5 mb-lg-0">
+												</div>
+											</form>
+						</div>
+						<div class="col-lg-3">
+							<h4 class="text-primary">Cart Totals</h4>
+							<table class="cart-totals">
+								<tbody>
+									<tr class="cart-subtotal">
+										<th>
+											<strong class="text-dark">Cart Subtotal</strong>
+										</th>
+										<td>
+											<strong class="text-dark"><span class="amount">${{subtotal}}</span></strong>
+										</td>
+									</tr>
+									<tr class="shipping">
+										<th>
+											Shipping
+										</th>
+										<td>
+											{{shipping}}
+										</td>
+									</tr>
+									<tr class="total">
+										<th>
+											<strong class="text-dark">Order Total</strong>
+										</th>
+										<td>
+											<strong class="text-dark"><span class="amount">${{total}}</span></strong>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+
+<script>
+	
+	window.addEventListener('load', function() {
+		var selvalue = document.getElementById('selected').value
+		var statevalue = document.getElementById('selected1').value
+		var postalvalue = document.getElementById('selected2').value
+
+		document.getElementsByName('state')[0].value = statevalue;
+		document.getElementsByName('zipcode')[0].value = postalvalue;
+		console.log(selvalue)
+		var elmnt = document.getElementById('country')
+		for(var i=0; i < elmnt.options.length; i++)
+		{
+		if(elmnt.options[i].value === selvalue) {
+			elmnt.selectedIndex = i;
+			break;
+		}
+		}
+	})
+</script>			
+{% endblock content %}

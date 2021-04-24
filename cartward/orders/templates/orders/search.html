@@ -1,0 +1,76 @@
+{% extends "users/base.html" %}
+{% load static %}
+{% block content %}
+	<div role="main" class="main shop py-4">
+
+				<div class="container" >
+
+					<div class="masonry-loader masonry-loader-showing" >
+						<div class="row products product-thumb-info-list" data-plugin-masonry data-plugin-options="{'layoutMode': 'fitRows'}" id="content">
+							{% for item in product %}
+								<div class="col-12 col-sm-6 col-lg-3 product" >
+									<!-- <a href="shop-product-sidebar-left.html">
+										<span class="onsale">Sale!</span>
+									</a> -->
+									<span class="product-thumb-info border-0">
+										<!-- <a href="shop-cart.html" class="add-to-cart-product bg-color-primary">
+											<span class="text-uppercase text-1">Add to Cart</span>
+										</a> -->
+										<a href="{% url 'product-page' item.asin|slugify %}">
+											<span class="product-thumb-info-image">
+												<img alt="" class="img-fluid" src="{{item.images.medium}}" style="max-height: 250px;" >
+											</span>
+										</a>
+										<span class="product-thumb-info-content product-thumb-info-content pl-0 bg-color-light">
+											<a href="{% url 'product-page' item.asin|slugify %}">
+												<h4 class="text-4 text-primary">{{item.name}}</h4>
+												<span class="price">
+													<ins><span class="amount text-dark font-weight-semibold">${{item.fiat_price}}</span></ins>
+												</span>
+											</a>
+										</span>
+									</span>
+								</div>
+							{% endfor %}
+							
+						</div>
+						<!-- <div class="row">
+							<div class="col">
+								<ul class="pagination float-right">
+									<li class="page-item"><a class="page-link" href="#"><i class="fas fa-angle-left"></i></a></li>
+									<li class="page-item active"><a class="page-link" href="#">1</a></li>
+									<li class="page-item"><a class="page-link" href="#">2</a></li>
+									<li class="page-item"><a class="page-link" href="#">3</a></li>
+									<a class="page-link" href="#"><i class="fas fa-angle-right"></i></a>
+								</ul>
+							</div>
+						</div> -->
+					</div>
+
+				</div>
+
+			</div>
+			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+			<script>
+				var pagenum=1;
+				var query_slug = $("#searchinput").val()
+				  $(window).scroll(function(){
+						if ($(window).scrollTop() == $(document).height()-$(window).height()){
+						$.ajax({
+							type: 'POST',
+							url: '/get_pages/',
+							dataType: 'json',
+							data:{
+								page: pagenum,
+								query: String(query_slug),
+								csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+							},
+							success: function (data) { $('#content').append(data);
+								pagenum += 1 },
+							
+						});
+						}
+					});
+
+			</script>
+{% endblock content %}

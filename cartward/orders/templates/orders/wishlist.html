@@ -1,0 +1,140 @@
+{% extends "users/base.html" %}
+{% load static %}
+{% block content %}
+
+<div role="main" class="main shop py-4">
+
+    <div class="container">
+
+        <div class="row">
+            <div class="col">
+
+                <div class="featured-boxes">
+                    <div class="row">
+                        <div class="col">
+                            <div class="featured-box featured-box-primary text-left mt-2">
+                                <div class="box-content">
+                                    <form method="post" action="">
+                                        <table class="shop_table cart">
+                                            <thead>
+                                                <tr>
+                                                    <th class="product-remove">
+                                                        &nbsp;
+                                                    </th>
+                                                    <th class="product-thumbnail">
+                                                        &nbsp;
+                                                    </th>
+                                                    <th class="product-name">
+                                                        Product
+                                                    </th>
+                                                    <th class="product-price">
+                                                        Price
+                                                    </th>
+                                                    <th class="product-quantity">
+                                                        Quantity
+                                                    </th>
+                                                    <!-- <th class="product-subtotal">
+                                                        Total
+                                                    </th> -->
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr class="cart_table_item">
+                                                    <td class="product-remove">
+                                                        <a title="Remove this item" class="remove" href="#">
+                                                            <i class="fas fa-times"></i>
+                                                        </a>
+                                                    </td>
+                                                    <td class="product-thumbnail">
+                                                        <a href="shop-product-sidebar-left.html">
+                                                            <img width="100" height="100" alt="" class="img-fluid" src="img/products/product-grey-1.jpg">
+                                                        </a>
+                                                    </td>
+                                                    <td class="product-name">
+                                                        <a href="shop-product-sidebar-left.html">Photo Camera</a>
+                                                    </td>
+                                                    <td class="product-price">
+                                                        <span class="amount">$299</span>
+                                                    </td>
+                                                    <td class="product-quantity">
+                                                        <b style="padding-left:25px ;">1</b> 
+                                                    </td>
+                                                    <!-- <td class="product-subtotal">
+                                                        <span class="amount">$299</span>
+                                                    </td> -->
+                                                </tr>
+                                                <tr class="cart_table_item">
+                                                    <td class="product-remove">
+                                                        <a title="Remove this item" class="remove" href="#">
+                                                            <i class="fas fa-times"></i>
+                                                        </a>
+                                                    </td>
+                                                    <td class="product-thumbnail">
+                                                        <a href="shop-product-sidebar-left.html">
+                                                            <img width="100" height="100" alt="" class="img-fluid" src="img/products/product-grey-2.jpg">
+                                                        </a>
+                                                    </td>
+                                                    <td class="product-name">
+                                                        <a href="shop-product-sidebar-left.html">Golf Bag</a>
+                                                    </td>
+                                                    <td class="product-price">
+                                                        <span class="amount">$72</span>
+                                                    </td>
+                                                    <td class="product-quantity">
+                                                       <b style="padding-left:25px ;">1</b> 
+                                                    </td>
+                                                    <!-- <td class="product-subtotal">
+                                                        <span class="amount">$72</span>
+                                                    </td> -->
+                                                </tr>
+                                                <tr class="cart_table_item">
+                                                    <td class="product-remove">
+                                                        <a title="Remove this item" class="remove" href="#">
+                                                            <i class="fas fa-times"></i>
+                                                        </a>
+                                                    </td>
+                                                    <td class="product-thumbnail">
+                                                        <a href="shop-product-sidebar-left.html">
+                                                            <img width="100" height="100" alt="" class="img-fluid" src="img/products/product-grey-3.jpg">
+                                                        </a>
+                                                    </td>
+                                                    <td class="product-name">
+                                                        <a href="shop-product-sidebar-left.html">Workout</a>
+                                                    </td>
+                                                    <td class="product-price">
+                                                        <span class="amount">$60</span>
+                                                    </td>
+                                                    <td class="product-quantity">
+                                                        <b style="padding-left:25px ;">1</b> 
+                                                    </td>
+                                                    <!-- <td class="product-subtotal">
+                                                        <span class="amount">$60</span>
+                                                    </td> -->
+                                                </tr>
+                                                <tr>
+                                                    <td class="actions" colspan="6">
+                                                        <div class="actions-continue">
+                                                            <input type="submit" value="ADD TO CART" name="update_cart" class="btn btn-xl btn-light pr-4 pl-4 text-2 font-weight-semibold text-uppercase">
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<form style="margin-left: 350px;" method="POST" action="{% url 'search-page' %}" id="postform">
+    {% csrf_token %}
+    <div class="search"><input type="text" class="search-input" value="{{search_query}}" name="search" placeholder="Search products on Amazon.com or past URL"><a href="#" id="submitlink" class="search-icon" type="submit"><i class="fa fa-search"></i></a></div>
+</form>
+{% endblock content %}
