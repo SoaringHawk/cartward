@@ -1,0 +1,56 @@
+{% extends "users/base.html" %}
+{% load static %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h4>FAQ</h4>
+            <div class="toggle toggle-primary" data-plugin-toggle>
+                <section class="toggle">
+                    <label>How to get started?</label>
+                    <p>First past the URL of the product you want to purchase in the search bar or past a keyword you want to look up. Once you made your mind add your product the your cart and complete the check-out process. Add fund to your account enough to cover your order and fees. Once your order is complete to will receive a confirmation email with information to track your order.</p>
+                </section>
+
+                <section class="toggle">
+                    <label>How can I fund my account?</label>
+                    <p><ul>
+                        <li>Click on your username on the top left corner.</li>
+                        <li>Select Deposit in the dropdown menu.</li>
+                        <li>Send fund to the address provided to you</li>
+                        <b>N.B Only send BTC to this address to avoid loss of fund. </b>
+                    </ul></p>
+                </section>
+
+                <section class="toggle">
+                    <label>What is the processing and shipping time?</label>
+                    <p>Your delivery time is dependent on the carrier you select. Cartward will take care of everything from the amazon purchase to the delivery to your country, the shipping time varies between 1-3 weeks. If your order exceed this delay, Please get in touch with us as soon as possible.<br><b>N.B Custom fees may be applicable depending on country and carrier.</b></br></p>
+                </section>
+
+                <section class="toggle">
+                    <label>Will you provide Tracking information?</label>
+                    <p>Yes, we provide tracking information for every order we deliver.</p>
+                </section>
+                
+                <section class="toggle">
+                    <label>How can I access the tracking information for my order?</label>
+                    <p><ul>
+                        <li>Click on your username on the top left corner.</li>
+                        <li>Select Order in the dropdown menu.</li>
+                        <li>Select the order to have all the information.</li>
+                    </ul></p>
+                </section>
+
+                <section class="toggle">
+                    <label>Can I use Cartward for dropshipping?</label>
+                    <p>Yes, Our service can be used to dropship product to your customers worlwide.</p>
+                </section>
+
+                <section class="toggle">
+                    <label>What item am I allowed to ship?</label>
+                    <p>The products you can ship depends on your country and the carrier you choose, use our <a href="{% url 'prohibited-page' %}">tool</a> to find out what you can and cannot ship to your country.</p>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

@@ -20,6 +20,10 @@ from orders import views as order_views
 from django.contrib.auth import views as auth_views
 from django.conf.urls import url
 
+
+handler404 = 'users.views.handler404'
+handler500 = 'users.views.handler500'
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', user_views.home, name='home-page'),
@@ -40,7 +44,7 @@ urlpatterns = [
          name='password_reset_complete'),
     path('US/search/', order_views.search, name='search-page'),
     path('US/product/<slug:slug>/', order_views.product, name='product-page'),
-    path('US/search/<slug:query_slug>/<slug:page_slug>/', order_views.list, name='list-page'),
+    path('US/search/<slug:query_slug>/<slug:page_slug>/', order_views.listing, name='list-page'),
     url(r'^add_to_cart/$', order_views.add_to_cart, name='add_to_cart-method'),
     url(r'^update_cart/$', order_views.update_cart),
     url(r'^get_shipping/$', order_views.get_shipping),
@@ -63,6 +67,9 @@ urlpatterns = [
     path('contact-us/', user_views.contactus, name='contact-page'),
     path('about-us/', user_views.aboutus, name='aboutus-page'),
     path('prohibited-item/', order_views.prohibited, name='prohibited-page'),
+    path('faq/', order_views.faq, name='faq'),
+    path('payments/receive/', user_views.receive_payment, name='receive_payment'),
+    path('payment/invoice/<pk>',user_views.track_invoice, name='track_payment'),
 
 
 ]

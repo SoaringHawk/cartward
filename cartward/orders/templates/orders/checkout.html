@@ -30,17 +30,17 @@
 																	<div class="form-row">
 																		<div class="form-group col-lg-6">
 																			<label class="font-weight-bold text-dark text-2">First Name</label>
-																			<input type="text" name="firstname" value="" class="form-control">
+																			<input required="true" type="text" name="firstname" value="" class="form-control">
 																		</div>
 																		<div class="form-group col-lg-6">
 																			<label class="font-weight-bold text-dark text-2">Last Name</label>
-																			<input type="text" name="lastname" value="" class="form-control">
+																			<input required="true" type="text" name="lastname" value="" class="form-control">
 																		</div>
 																	</div>
 																	<div class="form-row">
 																		<div class="form-group col">
 																			<label class="font-weight-bold text-dark text-2">Address Line 1</label>
-																			<input type="text" name="addressline1" value="" class="form-control">
+																			<input required="true" type="text" name="addressline1" value="" class="form-control">
 																		</div>
 																	</div>
 																	<div class="form-row">
@@ -52,24 +52,24 @@
 																	<div class="form-row">
 																		<div class="form-group col-lg-6">
 																			<label class="font-weight-bold text-dark text-2">City</label>
-																			<input type="text" name="city" value="" class="form-control">
+																			<input required="true" type="text" name="city" value="" class="form-control">
 																		</div>
 																		<div class="form-group col-lg-6">
 																			<label class="font-weight-bold text-dark text-2">State or Province</label>
-																			<input type="text" name="state" value="" class="form-control">
+																			<input required="true" type="text" name="state" value="" class="form-control">
 																		</div>
 																	</div>
 																	<div class="form-row">
 																		<div class="form-group col-lg-6">
 																			<label class="font-weight-bold text-dark text-2">Postal Code/ Zip Code</label>
-																			<input type="text" name="zipcode" value="" class="form-control">
+																			<input required="true" type="text" name="zipcode" value="" class="form-control">
 																		</div>
 																		<div class="form-group col">
 																			<input hidden type="text" value="{{countryselected}}" id="selected">
 																			<input hidden type="text" value="{{stateselected}}" id="selected1">
 																			<input hidden type="text" value="{{postalselected}}" id="selected2">
 																			<label class="font-weight-bold text-dark text-2">Country</label>
-																			<select id="country" name="country" class="form-control">
+																			<select required="true" id="country" name="country" class="form-control">
 																				<option value="none">Select a country</option>
 																				<option value="AF">Afghanistan</option>
 																				<option value="AL">Albania</option>
@@ -380,7 +380,7 @@
 														<div class="card-header">
 															<h4 class="card-title m-0">
 																<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
-																	Cart Review
+																	Review & Payment
 																</a>
 															</h4>
 														</div>
@@ -465,24 +465,24 @@
 																	</tbody>
 																</table> -->
 												
-																<!-- <hr class="solid my-5"> -->
+																<!-- <hr class="solid my-5"> 
 												
-																<!-- <h4 class="text-primary">Payment</h4> -->
+																<h4 class="text-primary">Payment</h4> -->
 												
 																<!-- <form action="/" id="frmPayment" method="post">
 																	<div class="form-row">
 																		<div class="form-group col">
-																			<div class="custom-control custom-checkbox">
-																				<input type="checkbox" class="custom-control-input" id="paymentdirectbank">
-																				<label class="custom-control-label" for="paymentdirectbank">Direct Bank Transfer</label>
+																			<div class="radio-custom">
+																				<input disabled='' type="radio" id="radioExample1" name="radioExample">
+																				<label for="radioExample1">Bitcoin</label>
 																			</div>
 																		</div>
 																	</div>
 																	<div class="form-row">
 																		<div class="form-group col">
-																			<div class="custom-control custom-checkbox">
-																				<input type="checkbox" class="custom-control-input" id="paymentcheque">
-																				<label class="custom-control-label" for="paymentcheque">Cheque Payment</label>
+																			<div class="radio-custom radio-primary">
+																				<input type="radio" id="radioExample2" name="radioExample">
+																				<label for="radioExample2">2Checkout</label>
 																			</div>
 																		</div>
 																	</div>
@@ -501,7 +501,11 @@
 												</div>
 												<input hidden="true" name="service" value="{{service}}">
 												<div class="actions-continue">
-													<input type="submit" value="Place Order" name="proceed" class="btn btn-primary btn-modern text-uppercase mt-5 mb-5 mb-lg-0">
+													{% if user.profile.balance >= total %}
+														<input type="submit" value="Place Order" name="proceed" class="btn btn-primary btn-modern text-uppercase mt-5 mb-5 mb-lg-0">
+													{% else%}
+														<strong class="text-dark">Please add fund to your account</strong>
+													{% endif %}
 												</div>
 											</form>
 						</div>
@@ -523,6 +527,14 @@
 										</th>
 										<td>
 											{{shipping}}
+										</td>
+									</tr>
+									<tr class="shipping">
+										<th>
+											Carrier
+										</th>
+										<td>
+											{{service}}
 										</td>
 									</tr>
 									<tr class="total">

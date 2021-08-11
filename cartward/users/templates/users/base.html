@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 {% load static %}
 <html>
+	
 	<head>
 
 		<!-- Basic -->
@@ -49,6 +50,16 @@
 
 		<!-- Theme Custom CSS -->
 		<link rel="stylesheet" href="{% static 'users/css/custom.css' %}">
+
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=G-T1M1XFHSDV"></script>
+		<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+
+		gtag('config', 'G-T1M1XFHSDV');
+		</script>
 
 		<!-- Head Libs -->
 		<script src="{% static 'users/vendor/modernizr/modernizr.min.js' %}"></script>
@@ -120,7 +131,7 @@
 			    text-decoration: none
 			}
 		</style>
-
+	<script type="text/javascript">window.$crisp=[];window.CRISP_WEBSITE_ID="143a4d61-5e76-4c91-a776-ba726f891a98";(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();</script>
 	</head>
 	<body>
 
@@ -215,7 +226,7 @@
 							<div id="searchform">
 								<form method="POST" action="{% url 'search-page' %}" id="postform">
 									{% csrf_token %}
-									<div class="search" style="width: 600px; margin-left: 100px;"><input id="searchinput" type="text" class="search-input" value="{{search_query}}"  name="search" placeholder="Search products on Amazon.com or past URL"><a href="#" onclick="submitform()" class="search-icon" type="submit"><i class="fa fa-search"></i></a></div>
+									<div class="search" style="width: 600px; margin-left: 100px;"><input required="true" id="searchbar" type="text" class="search-input" value="{{search_query}}"  name="search" placeholder="Search products on Amazon.com or past URL"><a href="#" onclick="submitform()" class="search-icon" type="submit"><i class="fa fa-search"></i></a></div>
 								</form>
 							</div>
 							
@@ -322,8 +333,8 @@
 												<nav class="collapse">
 													<ul class="nav nav-pills" id="mainNav">
 														<li class="dropdown">
-															<a class="dropdown-item dropdown-toggle" href="index.html">
-																How it works
+															<a class="dropdown-item dropdown-toggle" href="{% url 'faq' %}">
+																FAQ
 															</a>
 														</li>
 														<li class="dropdown dropdown-mega">
@@ -388,7 +399,7 @@
 							<p class="text-4 mb-0">Porto Blvd, Suite</p>
 							<p class="text-4 mb-0">New York</p> -->
 							<a href="{% url 'contact-page' %}" ><p class="text-4 mb-0">Contact US</p></a>
-							<a href="#" ><p class="text-4 mb-0">FAQ</p></a>
+							<a href="{% url 'faq' %}" ><p class="text-4 mb-0">FAQ</p></a>
 							<a href="{% url 'prohibited-page' %}" ><p class="text-4 mb-0">Prohibited Items</p></a>
 						</div>
 						<div class="col-7 col-md-6 col-lg-3 mb-5 mb-lg-0">
@@ -397,7 +408,8 @@
 						</div>
 						<div class="col-7 col-md-6 col-lg-3 mb-5 mb-lg-0">
 							<h5 class="text-6 text-transform-none font-weight-light text-color-light mb-4">Services</h5>
-							<a href="#"><p class="text-4 mb-0">How it works</p></a>
+							<a href="#"><p class="text-4 mb-0">Shipment Fowarding</p></a>
+							<a href="#"><p class="text-4 mb-0">Dropshipping</p></a>
 							
 						</div>
 						<div class="col-5 col-md-6 col-lg-3">
@@ -429,7 +441,14 @@
 
 			function submitform(){
 				var form = document.getElementById("postform");
-				form.submit();
+				var query = document.getElementsByClassName('search-input')[0].value
+				console.log(query)
+				if(query == ""){
+					alert("Please fill the query form.")
+				}else{
+					form.submit();
+				}
+				
 			}
 			
 		</script>

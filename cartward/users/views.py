@@ -10,7 +10,7 @@ from django.template.loader import render_to_string
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from users.models import Profile, Address, Order
+from users.models import Profile, Address, Order, Btcinvoice
 from django.contrib.auth.models import User
 from django.views import View
 from django.utils.safestring import mark_safe
@@ -20,6 +20,9 @@ import json
 import requests
 from django.core.paginator import Paginator
 import uuid
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import get_template
+from django.conf import settings
 
 
 # Create your views here.
@@ -39,6 +42,24 @@ def privacypolicy(request):
 	return render(request, 'users/privacypolicy.html')
 
 def contactus(request):
+	if request.method == 'POST':
+		name = request.POST['name']
+		email = request.POST['email']
+		subject = request.POST['subject']
+		message = request.POST['message']
+
+		to_email = settings.EMAIL_HOST_USER
+		plaintext = "From: {}, Email:{}\n".format(name, email) + message
+		
+		from_email, to = None, to_email
+		text_content = plaintext
+		msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
+		msg.send()
+
+		messages.success(request, mark_safe(
+					"Message sent, We will be back to you shortly."))
+		return render(request, 'users/message_sent.html')
+
 	return render(request, 'users/contact-us.html')
 
 def aboutus(request):
@@ -59,17 +80,24 @@ def signinregister(request):
 				form.save()
 				current_site = get_current_site(request)
 				mail_subject = 'Please, activate your Cartward account.'
-				message = render_to_string('users/acc_active_email.html', {
+				
+				to_email = user.email
+				plaintext = "Hello"
+				htmly     = get_template('users/acc_active_email.html')
+
+				d = {
 					'user': user,
 					'domain': current_site.domain,
 					'uid': urlsafe_base64_encode(force_bytes(user.pk)),
 					'token': default_token_generator.make_token(user),
-				})
-				to_email = form.cleaned_data.get('email')
-				email = EmailMessage(
-					mail_subject, message, to=[to_email]
-				)
-				email.send()
+				}
+
+				from_email, to = None, to_email
+				text_content = plaintext
+				html_content = htmly.render(d)
+				msg = EmailMultiAlternatives(mail_subject, text_content, from_email, [to])
+				msg.attach_alternative(html_content, "text/html")
+				msg.send()
 				messages.info(request, mark_safe(
 					'''Please confirm your email address to complete the registration. <a href="resend/{}/" class="alert-link">Resend 
 					activation link</a> '''.format(user.pk)))
@@ -122,39 +150,54 @@ def signinregister(request):
 	return render(request, 'users/signinregister.html', {'form': form, 'form1': form1})
 
 def activate(request, uidb64, token):
-    try:
-        uid = force_text(urlsafe_base64_decode(uidb64))
-        user = User.objects.get(pk=uid)
-    except(TypeError, ValueError, OverflowError, User.DoesNotExist):
-        user = None
-    if user is not None and default_token_generator.check_token(user, token):
-        user.is_active = True
-        user.profile.registration_status = "Complete"
-        user.save()
-        messages.success(request, 'Confirmed. Now you can login and start shopping.')
-        return redirect('signin-register')
-    else:
-        return messages.error(request, 'Link invalid')
+	try:
+		uid = force_text(urlsafe_base64_decode(uidb64))
+		user = User.objects.get(pk=uid)
+	except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+		user = None
+	if user is not None and default_token_generator.check_token(user, token):
+		user.is_active = True
+		user.profile.registration_status = "Complete"
+		url = 'https://www.blockonomics.co/api/new_address'
+		headers = {'Authorization': "Bearer " + 'NpoOY9tGZVFGDtda0VnqdWbfKrtGO0kx4o6XB0oXal0'}
+		r = requests.post(url, headers=headers)
+		print(r.json())
+		if r.status_code == 200:
+			user.profile.btcaddress = r.json()['address']
+
+		user.save()
+		messages.success(request, 'Confirmed. Now you can login and start shopping.')
+
+		return redirect('signin-register')
+	else:
+		return messages.error(request, 'Link invalid')
 
 def resend(request, pk):
-    current_site = get_current_site(request)
-    mail_subject = 'Please, Activate your wide-bot account.'
-    user = User.objects.filter(pk=pk).first()
-    message = render_to_string('users/acc_active_email.html', {
-        'user': user,
-        'domain': current_site.domain,
-        'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-        'token': default_token_generator.make_token(user),
-    })
-    to_email = user.email
-    email = EmailMessage(
-        mail_subject, message, to=[to_email]
-    )
-    email.send()
-    messages.info(request, mark_safe(
-        '''Email sent! Please confirm your email address  to complete the registration . <a href="resend/{}/" class="alert-link">Resend 
-        activation link</a> '''.format(user.pk)))
-    return redirect('signin-register')
+	current_site = get_current_site(request)
+	mail_subject = 'Please, Activate your Cartward account.'
+	user = User.objects.filter(pk=pk).first()
+	to_email = user.email
+	plaintext = "Hello"
+	htmly     = get_template('users/acc_active_email.html')
+
+	d = {
+		'user': user,
+		'domain': current_site.domain,
+		'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+		'token': default_token_generator.make_token(user),
+	}
+
+	from_email, to = None, to_email
+	text_content = plaintext
+	html_content = htmly.render(d)
+	msg = EmailMultiAlternatives(mail_subject, text_content, from_email, [to])
+	msg.attach_alternative(html_content, "text/html")
+	msg.send()
+
+	messages.info(request, mark_safe(
+		'''Email sent! Please confirm your email address  to complete the registration . <a href="resend/{}/" class="alert-link">Resend 
+		activation link</a> '''.format(user.pk)))
+	return redirect('signin-register')
 
 @login_required
 def logout_view(request, *args, **kwargs):
@@ -257,24 +300,15 @@ def orderdetails(request, pk):
 		address_html = '<p>{}<br>{}<br>{}<br>{}<br>{}<br>{}<br>{}<br>Ph: {}</p>'.format((order.address.first_name + ' ' + order.address.last_name), order.address.address_line_2, order.address.address_line_1, order.address.state, order.address.city, order.address.postalcode, order.address.country, order.address.phonenumber)
 		
 
-		return render(request, 'users/orderdetails.html', {'order':order,'track_html': track_html, 'address_html': address_html})
+		return render(request, 'users/orderdetails.html', {'order':order,'track_html': track_html, 'address_html': address_html, 'carrier': order.shipping})
 
 
 def deposit(request):
 	if request.method == 'GET':
-		# product_id = pk
-		# product = Product.objects.get(id=product_id)
-		url = 'https://www.blockonomics.co/api/new_address'
-		headers = {'Authorization': "Bearer " + 'NpoOY9tGZVFGDtda0VnqdWbfKrtGO0kx4o6XB0oXal0'}
-		r = requests.post(url, headers=headers)
-		print(r.json())
-		if r.status_code == 200:
-			address = r.json()['address']
-			# bits = exchanged_rate(product.price)
-			# order_id = uuid.uuid1()
-			# invoice = Invoice.objects.create(order_id=order_id,
-			#                         address=address,btcvalue=bits*1e8, product=product)
-		return render(request, 'users/deposit.html',{'address':address})
+		
+		invoice = Btcinvoice.objects.create(
+				address=request.user.profile.btcaddress, owner=request.user)
+		return HttpResponseRedirect(reverse('track_payment', kwargs={'pk':invoice.id}))
 
 # def exchanged_rate(amount):
 #     url = "https://www.blockonomics.co/api/price?currency=USD"
@@ -282,44 +316,58 @@ def deposit(request):
 #     response = r.json()
 #     return amount/response['price']
 
-# def track_invoice(request, pk):
-#     invoice_id = pk
-#     invoice = Invoice.objects.get(id=invoice_id)
-#     data = {
-#             'order_id':invoice.order_id,
-#             'bits':invoice.btcvalue/1e8,
-#             'value':invoice.product.price,
-#             'addr': invoice.address,
-#             'status':Invoice.STATUS_CHOICES[invoice.status+1][1],
-#             'invoice_status': invoice.status,
-#         }
-#     if (invoice.received):
-#         data['paid'] =  invoice.received/1e8
-#         if (int(invoice.btcvalue) <= int(invoice.received)):
-#             data['path'] = invoice.product.product_image.url
-#     else:
-#         data['paid'] = 0  
+def track_invoice(request, pk):
+    invoice_id = pk
+    invoice = Btcinvoice.objects.get(id=invoice_id)
+    data = {
+            'address': invoice.address,
+            'status':Btcinvoice.STATUS_CHOICES[invoice.status+1][1],
+            'invoice_status': invoice.status,
+        }
 
-#     return render(request,'invoice.html',context=data)
+    return render(request,'users/deposit.html',data)
 
     
     
-# def receive_payment(request):
+def receive_payment(request):
     
-#     if (request.method != 'GET'):
-#         return 
+	if (request.method != 'GET'):
+		return 
     
-#     txid  = request.GET.get('txid')
-#     value = request.GET.get('value')
-#     status = request.GET.get('status')
-#     addr = request.GET.get('addr')
+	txid  = request.GET.get('txid')
+	value = request.GET.get('value')
+	status = request.GET.get('status')
+	addr = request.GET.get('addr')
+	invoice = Btcinvoice.objects.get(address = addr)
+    
+	invoice.status = int(status)
+	if (int(status) == 0):
+		user = invoice.owner
+		user.profile.balance += value
+		user.save()
+		mail_subject = 'Account deposit.'
+		to_email = user.profile.email
+		plaintext = "Hello"
+		htmly     = get_template('users/account_deposit.html')
 
-#     invoice = Invoice.objects.get(address = addr)
-    
-#     invoice.status = int(status)
-#     if (int(status) == 2):
-#         invoice.received = value
-#     invoice.txid = txid
-#     invoice.save()
-#     return HttpResponse(200)
+		d = {
+			'user': user,
+			'amount': value
+		}
 
+		from_email, to = None, to_email
+		text_content = plaintext
+		html_content = htmly.render(d)
+		msg = EmailMultiAlternatives(mail_subject, text_content, from_email, [to])
+		msg.attach_alternative(html_content, "text/html")
+		msg.send()
+	invoice.txid = txid
+	invoice.save()
+	return HttpResponse(200)
+
+def handler404(request, exception):
+    return render(request, 'users/404.html', status=404)
+
+
+def handler500(request, *args, **argv):
+    return render(request, 'users/500.html', status=500)

@@ -10,6 +10,14 @@ import json
 from bs4 import BeautifulSoup
 from django.contrib.auth.decorators import login_required
 import time
+from django.template.loader import render_to_string
+from django.core.mail import EmailMessage
+from django.core.mail import send_mail
+from random import choice
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import get_template
+from django.template import Context
+from django.contrib.sites.shortcuts import get_current_site
 # Create your views here.
 
 def search(request):
@@ -35,8 +43,8 @@ def product(request, slug):
 	asin = product_data['asin']
 	selections = {}
 
-	url = 'https://api.sellerapp.com/free_tool/product/details?product_id={}'.format(asin)
-	product = requests.get(url)
+	
+	product = get_appseller(asin)
 	product = product.json()
 
 	weight = product['package_dimensions']['weight']['value']
@@ -93,7 +101,7 @@ def product(request, slug):
 
 	return render(request, 'orders/product.html', {'product': product_data, 'raw': html})
 
-def list(request, query_slug, page_slug):
+def listing(request, query_slug, page_slug):
 	query_slug = query_slug.replace("_", " ")
 	product_data = requests.get('https://purse.io/api/v2/items/us?keywords={}&page=1'.format(query_slug))
 	product_data = product_data.json()
@@ -101,6 +109,29 @@ def list(request, query_slug, page_slug):
 	product_data = product_data['items']
 
 	return render(request, 'orders/search.html', {'search_query': query_slug, 'product': product_data, 'delete_footer': 'true'})
+
+def proxy_generator():
+	response = requests.get("https://sslproxies.org/")
+	soup = BeautifulSoup(response.content, 'html5lib')
+	proxy = {'https': choice(list(map(lambda x:x[0]+':'+x[1], list(zip(map(lambda x:x.text, soup.findAll('td')[::8]), map(lambda x:x.text, soup.findAll('td')[1::8])))))),
+			'http': choice(list(map(lambda x:x[0]+':'+x[1], list(zip(map(lambda x:x.text, soup.findAll('td')[::8]), map(lambda x:x.text, soup.findAll('td')[1::8]))))))}
+    
+	return proxy
+
+def get_appseller(asin):
+    
+	while True:
+		try:
+			proxy = proxy_generator()
+			proxy['https'] = "http://"+ proxy['https']
+			proxy['http'] = "http://"+ proxy['http']
+			response = requests.request("get", "https://api.sellerapp.com/free_tool/product/details?product_id={}".format(asin), proxies=proxy, timeout=7, headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36"})
+			break
+			# if the request is successful, no exception is raised
+		except:
+			print("Connection error, looking for another proxy")
+			pass
+	return response 
 
 def add_to_cart(request):
 	jsondec = json.decoder.JSONDecoder()
@@ -121,9 +152,8 @@ def add_to_cart(request):
 				product_data = product_data.json()
 				asin = product_data['asin']
 				selections = {}
-
-				url = 'https://api.sellerapp.com/free_tool/product/details?product_id={}'.format(asin)
-				product = requests.get(url, headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36"})
+	
+				product = get_appseller(asin)
 				product = product.json()
 				weight = product['package_dimensions']['weight']['value']
 				length = product['package_dimensions']['length']['value']
@@ -202,9 +232,10 @@ def get_cart(request):
 			cart = request.session.get('cart')
 			totalprice = 0
 			totalweight = 0
-			for item in request.session.get('cart'):
-				totalprice += float(item['qty'])*float(item['fiat_price'])
-				totalweight += float(item['weight'])*float(item['qty'])
+			if cart != None:
+				for item in cart:
+					totalprice += float(item['qty'])*float(item['fiat_price'])
+					totalweight += float(item['weight'])*float(item['qty'])
 
 		return render(request, 'orders/cart.html', {'cart' : cart, 'cart_subtotal': "%.2f" %totalprice, 'total_weight': totalweight})
 
@@ -326,9 +357,9 @@ def get_shipping(request):
 				if tr.td['class'][0] == 'carrier-logo':
 					ship_data = {}
 					print(tr.td.text)
-					if 'USPS' not in tr.td.text or 'Shipito' not in tr.td.text:
+					if 'Shipito Priority Parcel' not in tr.td.text:
 						ship_data['service'] = (tr.td.text).replace("\n","").replace("\r","")
-						ship_data['usdamount'] = float(str(tr.span.text).replace('$','').replace('USD','').replace(' ',''))
+						ship_data['usdamount'] = float(str(tr.span.text).replace('$','').replace('USD','').replace(' ','')) + (numbox*5)
 						data.append(ship_data)
 					print(tr.span.text)
 			except:
@@ -453,9 +484,9 @@ def checkout(request):
 				if tr.td['class'][0] == 'carrier-logo':
 					ship_data = {}
 					# print(tr.td.text)
-					if 'USPS' not in tr.td.text or 'Shipito' not in tr.td.text:
+					if 'Shipito Priority Parcel' not in tr.td.text:
 						ship_data['service'] = (tr.td.text).replace("\n","").replace("\r","")
-						ship_data['usdamount'] = float(str(tr.span.text).replace('$','').replace('USD','').replace(' ',''))
+						ship_data['usdamount'] = float(str(tr.span.text).replace('$','').replace('USD','').replace(' ','')) + (numbox*5)
 						data.append(ship_data)
 					# print(tr.span.text)
 			except:
@@ -467,21 +498,33 @@ def checkout(request):
 			if carrier ==  elt['service']:
 				shipping = elt['usdamount']
 		
+	
 		total = float(subtotal) + float(shipping)
 		total ="%.2f" % total
-			
+
+		cart = request.user.cart
+		cart.carttotal = subtotal
+		cart.shippingtotal = shipping
+		print(total)
+		cart.total = float(total)
+
+		cart.save()
+		subtotal = "%.2f" % subtotal
 		
 
-		return render(request, 'orders/checkout.html', {'cart':usercart, 'subtotal':subtotal, 'shipping':shipping, 'service':carrier, 'total':total, 'countryselected': country, 'stateselected': state, 'postalselected': postalcode})
+		return render(request, 'orders/checkout.html', {'cart':usercart, 'subtotal':subtotal, 'shipping':shipping, 'service':carrier, 'total':float(total), 'countryselected': country, 'stateselected': state, 'postalselected': postalcode})
 	
 		
 
 @login_required
 def place_order(request):
 	jsondec = json.decoder.JSONDecoder()
+	print('there')
 	if request.method == 'POST':
 		print(request.POST)
 		user = request.user
+		print('---------------------')
+		print(user.cart.carttotal)
 		usercart = jsondec.decode(user.cart.items)
 		for item in usercart:
 			item.pop('variations', None)
@@ -490,12 +533,52 @@ def place_order(request):
 		address_line_2=request.POST['addressline2'], city=request.POST['city'], state=request.POST['state'], postalcode=request.POST['zipcode'],
 		country=request.POST['country'], phonenumber= request.POST['phonenumber'] )
 		address.save()
-
-		order = Order(owner= request.user, address= address, items=usercart, shipping=request.POST['service'])
+		order = Order(owner= request.user, address= address, items=usercart, shipping=request.POST['service'], carttotal= user.cart.carttotal, shippingtotal=user.cart.shippingtotal, total= float(user.cart.total) )
 		order.save()
 
 		user.cart.items = '[]'
 		user.save()
+
+		items = "*"
+		items += usercart[0]['name']
+
+		if len(usercart) > 1:
+			items += "and more..."
+		else:
+			items += "*"
+		
+		# mail_subject = 'Order confirmation.'
+		# message = render_to_string('orders/order_email.html', {
+		# 	'user': user,
+		# 	'items': items,
+		# 	'address1': request.POST['addressline1'],
+		# 	'address2': request.POST['addressline2']
+		# })
+		to_email = request.user.profile.email
+		# # email = EmailMessage(
+		# # 	mail_subject, message, to=[to_email]
+		# # )
+		# # email.send()
+
+		# send_mail(
+		# mail_subject,
+		# 'Hello',
+		# None,
+		# [to_email],
+		# html_message=message,
+		# )
+		current_site = get_current_site(request)
+		plaintext = "Hello"
+		htmly     = get_template('orders/order_email.html')
+
+		d = { 'user': user, 'items': items, 'address1': request.POST['addressline1'], 'address2': request.POST['addressline2'], 'domain': current_site.domain, 'pk': order.pk}
+
+		subject, from_email, to = 'Order Confirmation', None, to_email
+		text_content = plaintext
+		html_content = htmly.render(d)
+		msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
+		msg.attach_alternative(html_content, "text/html")
+		msg.send()
 
 		return render(request,'orders/checkout_success.html', {'pk':order.pk})
 	
@@ -547,6 +630,10 @@ def query_page(request):
 def prohibited(request):
 	if request.method == 'GET':
 		return render(request, 'orders/prohibited.html')
+
+def faq(request):
+	if request.method == 'GET':
+		return render(request, 'orders/faq.html')
 
 def get_prohibited_item(request):
 	if request.method == "POST":

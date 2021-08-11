@@ -11,18 +11,14 @@
                     <div class="profile-image-outer-container">
                         <div class="profile-image-inner-container bg-color-primary">
                             <img src="{% static 'users/img/avatars/avatar.png'%}">
-                            <span class="profile-image-button bg-color-dark">
-                                <i class="fas fa-camera text-light"></i>
-                            </span>
                         </div>
-                        <input type="file" id="file" class="profile-image-input">
                     </div>
                 </div> 
                 <h4 style="padding-left: 80px;">Balance: ${{user.profile.balance|floatformat:2}}</h4>
                  <aside class="sidebar mt-2" id="sidebar">
                     <ul class="nav nav-list flex-column mb-5">
                         <li class="nav-item"><a class="nav-link text-dark active" href="{% url 'profile-page' %}">My Profile</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#">Address Book</a></li>
+                        <!-- <li class="nav-item"><a class="nav-link" href="#">Address Book</a></li> -->
                         <li class="nav-item"><a class="nav-link" href="{% url 'deposit-page' %}">Deposit</a></li>
                         <!-- <li class="nav-item"><a class="nav-link" href="#">Billing</a></li>
                         <li class="nav-item"><a class="nav-link" href="#">Invoices</a></li> -->
